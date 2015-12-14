@@ -70,8 +70,12 @@ function fnTournamentsMenu( $skin, &$bar ) {
 					$text = $line;
 					$link = $line;
 					$title = Title::newFromText( $link );
-					$title = $title->fixSpecialName();
-					$href = $title->getLocalURL();
+                                        if ( $title ) {
+                                                $title = $title->fixSpecialName();
+                                                $href = $title->getLocalURL();
+                                        } else {
+						$href = 'INVALID-TITLE';
+					}
 					$new_bar[$heading][] = array(
 													'text' => $text,
 													'href' => $href,
