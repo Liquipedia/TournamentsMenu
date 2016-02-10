@@ -5,7 +5,7 @@ MediaWiki Extension for Liquipedia, provides the editable tournament on top of t
 
 Installation
 ============
-* Extract the extension folder to extensions/
+* Extract the extension folder to extensions/TournamentsMenu/
 * Add the following line to LocalSettings.php:
 
-        require_once "$IP/extensions/TournamentsMenu/TournamentsMenu.php";
+        wfLoadExtension( 'TournamentsMenu' );
