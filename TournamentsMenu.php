@@ -86,7 +86,9 @@ function fnTournamentsMenu( $skin, &$bar ) {
 			}
 		}
 	}
-	$bar['TOURNAMENTS'] = $new_bar;
+        if(isset($bar['TOURNAMENTS'])) {
+                $bar['TOURNAMENTS'] = $new_bar;
+        }
 	return true;
 }
 
