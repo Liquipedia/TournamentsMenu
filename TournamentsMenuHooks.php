@@ -7,8 +7,8 @@ class TournamentsMenuHooks {
 
                         if ( Title::newFromText( $message, NS_PROJECT )->exists() ) {
                                 $titleFromText = Title::newFromText( $message, NS_PROJECT );
-                                $article = new Article($titleFromText);
-                                $text = $article->getContent();
+                                $article = WikiPage::factory($titleFromText);
+                                $text = $article->getText(Revision::FOR_PUBLIC);
                                 $lines = explode( "\n",  $text );
 
                                 $new_bar = array();
