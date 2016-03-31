@@ -1,5 +1,5 @@
-LiquiFlow
-=========
+LiquiFlow Tournament List Extension
+===================================
 
 MediaWiki Extension for Liquipedia, provides the editable tournament on top of the LiquiFlow MediaWiki skin
 
