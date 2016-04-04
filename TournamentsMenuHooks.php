@@ -1,7 +1,7 @@
 <?php
 
 class TournamentsMenuHooks {
-        public static function skinBuildSidebar( $skin, &$bar ) {
+        public static function onSkinBuildSidebar( $skin, &$bar ) {
                 if(isset($bar['TOURNAMENTS'])) {
                         $message = 'Tournaments';
 

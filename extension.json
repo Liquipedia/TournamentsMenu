@@ -17,7 +17,7 @@
 	},
 	"Hooks": {
 		"SkinBuildSidebar": [
-			"TournamentsMenuHooks::skinBuildSidebar"
+			"TournamentsMenuHooks::onSkinBuildSidebar"
 		]
 	},
 	"manifest_version": 1
