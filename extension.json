@@ -13,11 +13,15 @@
                 "MediaWiki": ">= 1.25.0"
         },
 	"AutoloadClasses": {
-		"TournamentsMenuHooks": "TournamentsMenuHooks.php"
+		"TournamentsMenuHooks": "TournamentsMenuHooks.php",
+		"TournamentsMenuParserFunction": "TournamentsMenuParserFunction.php"
 	},
 	"Hooks": {
 		"SkinBuildSidebar": [
 			"TournamentsMenuHooks::onSkinBuildSidebar"
+		],
+		"ParserFirstCallInit": [
+			"TournamentsMenuParserFunction::onParserFirstCallInit"
 		]
 	},
 	"manifest_version": 1
