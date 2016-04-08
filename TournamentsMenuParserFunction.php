@@ -52,7 +52,8 @@ class TournamentsMenuParserFunction {
 														'text' => $text,
 														'href' => $href,
 														'id' => 'n-' . strtr($line[1], ' ', '-'),
-														'active' => false
+														'active' => false,
+														'exists' => $title->exists()
 						);
 					} else { 
 						$line = trim($line, '* ');
@@ -73,7 +74,8 @@ class TournamentsMenuParserFunction {
 														'text' => $text,
 														'href' => $href,
 														'id' => 'n-' . strtr($line, ' ', '-'),
-														'active' => false
+														'active' => false,
+														'exists' => $title->exists()
 						);
 					}
 				}
@@ -86,7 +88,7 @@ class TournamentsMenuParserFunction {
 				$return .= '<ul class="tournaments-list-type-list">';
 				foreach($type_list as $tournament_arr) {
 					$return .= '<li>';
-					$return .= '<a href="' . $tournament_arr['href'] . '">' . $tournament_arr['text'] . '</a>';
+					$return .= '<a ' . ((!$tournament_arr['exists'])?'class="new" ':'') . 'href="' . $tournament_arr['href'] . '">' . $tournament_arr['text'] . '</a>';
 					$return .= '</li>';
 				}
 				$return .= '</ul>';
