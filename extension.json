@@ -2,16 +2,16 @@
 	"name": "TournamentsMenu",
 	"version": "1.1",
 	"author": [
-                "Philip Becker-Ehmck",
+		"Philip Becker-Ehmck",
 		"Alex Winkler"
 	],
 	"url": "http://wiki.teamliquid.net/",
 	"descriptionmsg": "Allows everyone to modify the tournaments menu point.",
 	"license-name": "MIT",
 	"type": "other",
-        "requires": {
-                "MediaWiki": ">= 1.25.0"
-        },
+	"requires": {
+		"MediaWiki": ">= 1.25.0"
+	},
 	"AutoloadClasses": {
 		"TournamentsMenuHooks": "TournamentsMenuHooks.php",
 		"TournamentsMenuParserFunction": "TournamentsMenuParserFunction.php"

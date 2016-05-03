@@ -8,7 +8,7 @@ class TournamentsMenuParserFunction {
 	public static function getTournamentsList( $parser ) {
 		$message = 'Tournaments';
 
-                if ( Title::newFromText( $message, NS_PROJECT )->exists() ) {
+		if ( Title::newFromText( $message, NS_PROJECT )->exists() ) {
 			$titleFromText = Title::newFromText( $message, NS_PROJECT );
 			$article = WikiPage::factory($titleFromText);
 			$text = $article->getText(Revision::FOR_PUBLIC);
