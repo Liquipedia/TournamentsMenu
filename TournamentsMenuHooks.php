@@ -75,8 +75,8 @@ class TournamentsMenuHooks {
 						}
 					}
 				}
+				$bar['TOURNAMENTS'] = $new_bar;
 			}
-			$bar['TOURNAMENTS'] = $new_bar;
 		}
 		return true;
 	}
