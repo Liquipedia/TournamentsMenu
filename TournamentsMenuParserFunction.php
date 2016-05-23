@@ -49,11 +49,11 @@ class TournamentsMenuParserFunction {
 						}
 
 						$new_bar[$heading][] = array(
-														'text' => $text,
-														'href' => $href,
-														'id' => 'n-' . strtr($line[1], ' ', '-'),
-														'active' => false,
-														'exists' => $title->exists()
+							'text' => $text,
+							'href' => $href,
+							'id' => 'n-' . strtr($line[1], ' ', '-'),
+							'active' => false,
+							'exists' => $title->exists()
 						);
 					} else { 
 						$line = trim($line, '* ');
@@ -71,11 +71,11 @@ class TournamentsMenuParserFunction {
 							$href = 'INVALID-TITLE';
 						}
 						$new_bar[$heading][] = array(
-														'text' => $text,
-														'href' => $href,
-														'id' => 'n-' . strtr($line, ' ', '-'),
-														'active' => false,
-														'exists' => $title->exists()
+							'text' => $text,
+							'href' => $href,
+							'id' => 'n-' . strtr($line, ' ', '-'),
+							'active' => false,
+							'exists' => $title->exists()
 						);
 					}
 				}
