@@ -26,14 +26,14 @@ class TournamentsMenuParserFunction {
 				} else {
 					if (strpos($line, '|') !== false) { // sanity check
 						$line = array_map('trim', explode( '|' , trim($line, '* '), 2 ) );
-						$link = wfMsgForContent( $line[0] );
+						$link = wfMessage( $line[0] )->inContentLanguage()->text();
 						if ($link == '-')
 							continue;
 
-						$text = wfMsgExt($line[1], 'parsemag');
-						if (wfEmptyMsg($line[1], $text))
+						$text = wfMessage($line[1])->text();
+						if (wfMessage($line[1], $text)->inContentLanguage()->isBlank())
 							$text = $line[1];
-						if (wfEmptyMsg($line[0], $link))
+						if (wfMessage($line[0], $link)->inContentLanguage()->isBlank())
 							$link = $line[0];
 
 						if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
