@@ -25,7 +25,22 @@ class TournamentsMenuParserFunction {
 					if( !array_key_exists($heading, $new_bar) ) $new_bar[$heading] = array();
 				} else {
 					if (strpos($line, '|') !== false) { // sanity check
-						$line = array_map('trim', explode( '|' , trim($line, '* '), 2 ) );
+						$line = array_map('trim', explode( '|' , trim($line, '* ') ) );
+
+						foreach( $line as $key => $value ) {
+							if( strpos( $value, 'startdate=' ) === 0 ) {
+								$startDate = substr( $value, 10 );
+								unset($line[$key]);
+							} else if( strpos( $value, 'enddate=' ) === 0 ) {
+								$endDate = substr( $value, 8 );
+								unset($line[$key]);
+							}
+						}
+						$line = array_values( $line );
+						if( count( $line ) == 1 ) {
+							$line[1] = $line[0];
+						}
+
 						$link = wfMessage( $line[0] )->inContentLanguage()->text();
 						if ($link == '-')
 							continue;
@@ -48,13 +63,23 @@ class TournamentsMenuParserFunction {
 							}
 						}
 
-						$new_bar[$heading][] = array(
+						$item = array(
 							'text' => $text,
 							'href' => $href,
-							'id' => 'n-' . strtr($line[1], ' ', '-'),
+							'id' => 'n-' . strtr($line[1], ' ', '-') . '-mainpage',
 							'active' => false,
 							'exists' => $title->exists()
 						);
+
+						if( isset( $startDate ) ) {
+							$item['startdate'] = $startDate;
+						}
+						if( isset( $endDate ) ) {
+							$item['enddate'] = $endDate;
+						}
+
+						$new_bar[$heading][] = $item;
+						unset($startDate, $endDate);
 					} else { 
 						$line = trim($line, '* ');
 						//$link = wfMsgForContent( $line );
@@ -88,7 +113,23 @@ class TournamentsMenuParserFunction {
 				$return .= '<ul class="tournaments-list-type-list">';
 				foreach($type_list as $tournament_arr) {
 					$return .= '<li>';
-					$return .= '<a ' . ((!$tournament_arr['exists'])?'class="new" ':'') . 'href="' . $tournament_arr['href'] . '">' . $tournament_arr['text'] . '</a>';
+					$return .= '<a ' . ((!$tournament_arr['exists'])?'class="new" ':'') . 'href="' . $tournament_arr['href'] . '">';
+					$return .= $tournament_arr['text'];
+					if( isset( $tournament_arr['startdate'] ) && isset( $tournament_arr['enddate'] ) ) {
+						$return .= '<span class="tournaments-list-dates">';
+						$return .= '<sup>' . $tournament_arr['startdate'] . '</sup>';
+						$return .= '<sub>' . $tournament_arr['enddate'] . '</sub>';
+						$return .= '</span>';
+					} else if( isset( $tournament_arr['startdate'] ) ){
+						$return .= '<small class="tournaments-list-dates">';
+						$return .= $tournament_arr['startdate'];
+						$return .= '</small>';
+					} else if( isset( $tournament_arr['enddate'] ) ){
+						$return .= '<small class="tournaments-list-dates">';
+						$return .= $tournament_arr['enddate'];
+						$return .= '</small>';
+					}
+					$return .= '</a>';
 					$return .= '</li>';
 				}
 				$return .= '</ul>';

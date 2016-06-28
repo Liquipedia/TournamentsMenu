@@ -22,7 +22,22 @@ class TournamentsMenuHooks {
 						if( !array_key_exists($heading, $new_bar) ) $new_bar[$heading] = array();
 					} else {
 						if (strpos($line, '|') !== false) { // sanity check
-							$line = array_map('trim', explode( '|' , trim($line, '* '), 2 ) );
+							$line = array_map('trim', explode( '|' , trim($line, '* ') ) );
+
+							foreach( $line as $key => $value ) {
+								if( strpos( $value, 'startdate=' ) === 0 ) {
+									$startDate = substr( $value, 10 );
+									unset($line[$key]);
+								} else if( strpos( $value, 'enddate=' ) === 0 ) {
+									$endDate = substr( $value, 8 );
+									unset($line[$key]);
+								}
+							}
+							$line = array_values( $line );
+							if( count( $line ) == 1 ) {
+								$line[1] = $line[0];
+							}
+
 							$link = wfMessage( $line[0] )->inContentLanguage()->text();
 							if ($link == '-')
 								continue;
@@ -45,12 +60,27 @@ class TournamentsMenuHooks {
 								}
 							}
 
+							if( isset($startDate) || isset($endDate) ) {
+								$text .= ' <small>(';
+								if( isset( $startDate ) ) {
+									$text .= $startDate;
+								}
+								if( isset( $startDate ) && isset( $endDate ) ) {
+									$text .= ' to ';
+								}
+								if( isset( $endDate ) ) {
+									$text .= $endDate;
+								}
+								$text .= ')</small>';
+							}
+
 							$new_bar[$heading][] = array(
 								'text' => $text,
 								'href' => $href,
 								'id' => 'n-' . strtr($line[1], ' ', '-'),
 								'active' => false
 							);
+							unset($startDate, $endDate);
 						} else { 
 							$line = trim($line, '* ');
 							//$link = wfMsgForContent( $line );
