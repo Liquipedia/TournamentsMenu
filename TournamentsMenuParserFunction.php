@@ -114,21 +114,21 @@ class TournamentsMenuParserFunction {
 				foreach($type_list as $tournament_arr) {
 					$return .= '<li>';
 					$return .= '<a ' . ((!$tournament_arr['exists'])?'class="new" ':'') . 'href="' . $tournament_arr['href'] . '">';
-					$return .= $tournament_arr['text'];
+					$return .= '<span class="tournaments-list-name">' . $tournament_arr['text'] . '</span>';
+					$return .= '<small class="tournaments-list-dates">';
 					if( isset( $tournament_arr['startdate'] ) && isset( $tournament_arr['enddate'] ) ) {
-						$return .= '<span class="tournaments-list-dates">';
-						$return .= '<sup>' . $tournament_arr['startdate'] . '</sup>';
-						$return .= '<sub>' . $tournament_arr['enddate'] . '</sub>';
-						$return .= '</span>';
-					} else if( isset( $tournament_arr['startdate'] ) ){
-						$return .= '<small class="tournaments-list-dates">';
 						$return .= $tournament_arr['startdate'];
-						$return .= '</small>';
-					} else if( isset( $tournament_arr['enddate'] ) ){
-						$return .= '<small class="tournaments-list-dates">';
+						$return .= ' &ndash; ';
+						if( substr( $tournament_arr['startdate'], 0, 3 ) == substr( $tournament_arr['enddate'], 0, 3 ) ) {
+							$tournament_arr['enddate'] = substr( $tournament_arr['enddate'], 4 );
+						}
 						$return .= $tournament_arr['enddate'];
-						$return .= '</small>';
+					} else if( isset( $tournament_arr['startdate'] ) ){
+						$return .= $tournament_arr['startdate'];
+					} else if( isset( $tournament_arr['enddate'] ) ){
+						$return .= $tournament_arr['enddate'];
 					}
+					$return .= '</small>';
 					$return .= '</a>';
 					$return .= '</li>';
 				}
