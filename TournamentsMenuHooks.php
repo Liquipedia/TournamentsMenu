@@ -25,11 +25,11 @@ class TournamentsMenuHooks {
 							$line = array_map('trim', explode( '|' , trim($line, '* ') ) );
 
 							foreach( $line as $key => $value ) {
-								if( strpos( $value, 'startdate=' ) === 0 ) {
-									$startDate = substr( $value, 10 );
+								if( strpos( $value, 'startdate' ) !== false ) {
+									$startDate = trim( explode( '=', $value )[1]);
 									unset($line[$key]);
-								} else if( strpos( $value, 'enddate=' ) === 0 ) {
-									$endDate = substr( $value, 8 );
+								} else if( strpos( $value, 'enddate' ) !== false ) {
+									$endDate = trim( explode( '=', $value )[1]);
 									unset($line[$key]);
 								}
 							}
