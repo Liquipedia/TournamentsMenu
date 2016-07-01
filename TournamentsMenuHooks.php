@@ -66,9 +66,12 @@ class TournamentsMenuHooks {
 									$text .= $startDate;
 								}
 								if( isset( $startDate ) && isset( $endDate ) ) {
-									$text .= ' to ';
+									$text .= ' - ';
 								}
 								if( isset( $endDate ) ) {
+									if( substr( $startDate, 0, 3 ) == substr( $endDate, 0, 3 ) ) {
+										$endDate = substr( $endDate, 4 );
+									}
 									$text .= $endDate;
 								}
 								$text .= ')</small>';
