@@ -7,6 +7,7 @@ class TournamentsMenuParserFunction {
 	
 	public static function getTournamentsList( $parser ) {
 		$message = 'Tournaments';
+		$return = '';
 
 		if ( Title::newFromText( $message, NS_PROJECT )->exists() ) {
 			$titleFromText = Title::newFromText( $message, NS_PROJECT );
@@ -106,7 +107,7 @@ class TournamentsMenuParserFunction {
 				}
 			}
 			
-			$return = '<ul class="tournaments-list">';
+			$return .= '<ul class="tournaments-list">';
 			foreach($new_bar as $type_name => $type_list) {
 				$return .= '<li>';
 				$return .= '<span class="tournaments-list-heading">' . $type_name . '</span>';
