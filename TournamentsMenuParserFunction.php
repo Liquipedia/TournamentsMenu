@@ -6,7 +6,9 @@ class TournamentsMenuParserFunction {
 	}
 	
 	public static function getTournamentsList( $parser ) {
+		global $wgOut;
 		$message = 'Tournaments';
+		$iconTemplatePrefix = 'LeagueIconSmall';
 		$return = '';
 
 		if ( Title::newFromText( $message, NS_PROJECT )->exists() ) {
@@ -34,6 +36,9 @@ class TournamentsMenuParserFunction {
 								unset($line[$key]);
 							} else if( strpos( $value, 'enddate' ) !== false ) {
 								$endDate = trim( explode( '=', $value )[1]);
+								unset($line[$key]);
+							} else if( strpos( $value, 'icon' ) !== false ) {
+								$icon = trim( explode( '=', $value )[1]);
 								unset($line[$key]);
 							}
 						}
@@ -72,15 +77,18 @@ class TournamentsMenuParserFunction {
 							'exists' => $title->exists()
 						);
 
-						if( isset( $startDate ) ) {
+						if( isset( $startDate ) && !empty( trim( $startDate ) ) ) {
 							$item['startdate'] = $startDate;
 						}
-						if( isset( $endDate ) ) {
+						if( isset( $endDate ) && !empty( trim( $endDate ) ) ) {
 							$item['enddate'] = $endDate;
+						}
+						if( isset( $icon ) && !empty( trim( $icon ) ) ) {
+							$item['icon'] = $icon;
 						}
 
 						$new_bar[$heading][] = $item;
-						unset($startDate, $endDate);
+						unset($startDate, $endDate, $icon);
 					} else { 
 						$line = trim($line, '* ');
 						//$link = wfMsgForContent( $line );
@@ -115,7 +123,11 @@ class TournamentsMenuParserFunction {
 				foreach($type_list as $tournament_arr) {
 					$return .= '<li>';
 					$return .= '<a ' . ((!$tournament_arr['exists'])?'class="new" ':'') . 'href="' . $tournament_arr['href'] . '">';
-					$return .= '<span class="tournaments-list-name">' . $tournament_arr['text'] . '</span>';
+					$return .= '<span class="tournaments-list-name">';
+					if( isset( $tournament_arr['icon'] ) && ( Title::newFromText( $iconTemplatePrefix . '/' . $tournament_arr['icon'], NS_TEMPLATE ) ) ) {
+						$return .= str_replace( '<p>', '', str_replace( '</p>', '', $wgOut->parse( '{{' . $iconTemplatePrefix . '/' . $tournament_arr['icon'] . '|link=}}' ) ) );
+					}
+					$return .= $tournament_arr['text'] . '</span>';
 					$return .= '<small class="tournaments-list-dates">';
 					if( isset( $tournament_arr['startdate'] ) && isset( $tournament_arr['enddate'] ) ) {
 						$return .= $tournament_arr['startdate'];

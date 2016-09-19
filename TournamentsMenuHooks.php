@@ -26,10 +26,19 @@ class TournamentsMenuHooks {
 
 							foreach( $line as $key => $value ) {
 								if( strpos( $value, 'startdate' ) !== false ) {
-									$startDate = trim( explode( '=', $value )[1]);
+									if( !empty( trim( explode( '=', $value )[1] ) ) ) {
+										$startDate = trim( explode( '=', $value )[1]);
+									}
 									unset($line[$key]);
 								} else if( strpos( $value, 'enddate' ) !== false ) {
-									$endDate = trim( explode( '=', $value )[1]);
+									if( !empty( trim( explode( '=', $value )[1] ) ) ) {
+										$endDate = trim( explode( '=', $value )[1]);
+									}
+									unset($line[$key]);
+								} else if( strpos( $value, 'icon' ) !== false ) {
+									if( !empty( trim( explode( '=', $value )[1] ) ) ) {
+										$icon = trim( explode( '=', $value )[1]);
+									}
 									unset($line[$key]);
 								}
 							}
@@ -83,7 +92,7 @@ class TournamentsMenuHooks {
 								'id' => 'n-' . strtr($line[1], ' ', '-'),
 								'active' => false
 							);
-							unset($startDate, $endDate);
+							unset($startDate, $endDate, $icon);
 						} else { 
 							$line = trim($line, '* ');
 							//$link = wfMsgForContent( $line );
