@@ -124,7 +124,7 @@ class TournamentsMenuParserFunction {
 					$return .= '<li>';
 					$return .= '<a ' . ((!$tournament_arr['exists'])?'class="new" ':'') . 'href="' . $tournament_arr['href'] . '">';
 					$return .= '<span class="tournaments-list-name">';
-					if( isset( $tournament_arr['icon'] ) && ( Title::newFromText( $iconTemplatePrefix . '/' . $tournament_arr['icon'], NS_TEMPLATE ) ) ) {
+					if( isset( $tournament_arr['icon'] ) && ( Title::newFromText( $iconTemplatePrefix . '/' . $tournament_arr['icon'], NS_TEMPLATE )->exists() ) ) {
 						$return .= str_replace( '<p>', '', str_replace( '</p>', '', $wgOut->parse( '{{' . $iconTemplatePrefix . '/' . $tournament_arr['icon'] . '|link=}}' ) ) );
 					}
 					$return .= $tournament_arr['text'] . '</span>';
