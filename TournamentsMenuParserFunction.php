@@ -32,13 +32,13 @@ class TournamentsMenuParserFunction {
 
 						foreach( $line as $key => $value ) {
 							if( strpos( $value, 'startdate' ) !== false ) {
-								$startDate = trim( explode( '=', $value )[1]);
+								$startDate = trim( explode( '=', $value )[1] );
 								unset($line[$key]);
 							} else if( strpos( $value, 'enddate' ) !== false ) {
-								$endDate = trim( explode( '=', $value )[1]);
+								$endDate = trim( explode( '=', $value )[1] );
 								unset($line[$key]);
 							} else if( strpos( $value, 'icon' ) !== false ) {
-								$icon = trim( explode( '=', $value )[1]);
+								$icon = trim( explode( '=', $value )[1] );
 								unset($line[$key]);
 							}
 						}
