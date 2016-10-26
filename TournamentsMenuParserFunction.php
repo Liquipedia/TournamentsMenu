@@ -69,7 +69,7 @@ class TournamentsMenuParserFunction {
 							}
 						}
 
-						if($title == null) {
+						if( $title == null ) {
 							$exists = false;
 						} else {
 							$exists = $title->exists();
