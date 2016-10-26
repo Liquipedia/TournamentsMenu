@@ -69,12 +69,18 @@ class TournamentsMenuParserFunction {
 							}
 						}
 
+						if($title == null) {
+							$exists = false;
+						} else {
+							$exists = $title->exists();
+						}
+						
 						$item = array(
 							'text' => $text,
 							'href' => $href,
 							'id' => 'n-' . strtr($line[1], ' ', '-') . '-mainpage',
 							'active' => false,
-							'exists' => $title->exists()
+							'exists' => $exists
 						);
 
 						if( isset( $startDate ) && !empty( trim( $startDate ) ) ) {
