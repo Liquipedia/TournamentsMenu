@@ -47,7 +47,11 @@ class TournamentsMenuParserFunction {
 							$line[1] = $line[0];
 						}
 
-						$link = wfMessage( $line[0] )->inContentLanguage()->text();
+						if($line[0] == null) {
+							$link = '-';
+						} else {
+							$link = wfMessage( $line[0] )->inContentLanguage()->text();
+						}
 						if ($link == '-')
 							continue;
 
