@@ -25,17 +25,18 @@ class TournamentsMenuHooks {
 							$line = array_map('trim', explode( '|' , trim($line, '* ') ) );
 
 							foreach( $line as $key => $value ) {
-								if( strpos( $value, 'startdate' ) !== false ) {
+								$value = trim( $value );
+								if( strpos( $value, 'startdate' ) === 0 ) {
 									if( !empty( trim( explode( '=', $value )[1] ) ) ) {
 										$startDate = trim( explode( '=', $value )[1]);
 									}
 									unset($line[$key]);
-								} else if( strpos( $value, 'enddate' ) !== false ) {
+								} else if( strpos( $value, 'enddate' ) === 0 ) {
 									if( !empty( trim( explode( '=', $value )[1] ) ) ) {
 										$endDate = trim( explode( '=', $value )[1]);
 									}
 									unset($line[$key]);
-								} else if( strpos( $value, 'icon' ) !== false ) {
+								} else if( strpos( $value, 'icon' ) === 0 ) {
 									if( !empty( trim( explode( '=', $value )[1] ) ) ) {
 										$icon = trim( explode( '=', $value )[1]);
 									}
