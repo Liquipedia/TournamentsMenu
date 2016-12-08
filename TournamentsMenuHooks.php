@@ -28,17 +28,17 @@ class TournamentsMenuHooks {
 								$value = trim( $value );
 								if( strpos( $value, 'startdate' ) === 0 ) {
 									if( !empty( trim( explode( '=', $value )[1] ) ) ) {
-										$startDate = trim( explode( '=', $value )[1]);
+										$startDate = htmlspecialchars( trim( explode( '=', $value )[1] ) );
 									}
 									unset($line[$key]);
 								} else if( strpos( $value, 'enddate' ) === 0 ) {
 									if( !empty( trim( explode( '=', $value )[1] ) ) ) {
-										$endDate = trim( explode( '=', $value )[1]);
+										$endDate = htmlspecialchars( trim( explode( '=', $value )[1] ) );
 									}
 									unset($line[$key]);
 								} else if( strpos( $value, 'icon' ) === 0 ) {
 									if( !empty( trim( explode( '=', $value )[1] ) ) ) {
-										$icon = trim( explode( '=', $value )[1]);
+										$icon = htmlspecialchars( trim( explode( '=', $value )[1] ) );
 									}
 									unset($line[$key]);
 								}
@@ -75,6 +75,8 @@ class TournamentsMenuHooks {
 								}
 							}
 
+							$text = htmlspecialchars( $text ) ;
+
 							if( isset($startDate) || isset($endDate) ) {
 								$text .= ' <small>(';
 								if( isset( $startDate ) ) {
@@ -105,7 +107,7 @@ class TournamentsMenuHooks {
 							//if ($link == '-')
 							//	continue;
 
-							$text = $line;
+							$text = htmlspecialchars( $line );
 							$link = $line;
 							$title = Title::newFromText( $link );
 							if ( $title ) {

@@ -79,7 +79,9 @@ class TournamentsMenuParserFunction {
 						} else {
 							$exists = $title->exists();
 						}
-						
+
+						$text = htmlspecialchars( $text );
+
 						$item = array(
 							'text' => $text,
 							'href' => $href,
@@ -89,13 +91,13 @@ class TournamentsMenuParserFunction {
 						);
 
 						if( isset( $startDate ) && !empty( trim( $startDate ) ) ) {
-							$item['startdate'] = $startDate;
+							$item['startdate'] = htmlspecialchars( $startDate );
 						}
 						if( isset( $endDate ) && !empty( trim( $endDate ) ) ) {
-							$item['enddate'] = $endDate;
+							$item['enddate'] = htmlspecialchars( $endDate );
 						}
 						if( isset( $icon ) && !empty( trim( $icon ) ) ) {
-							$item['icon'] = $icon;
+							$item['icon'] = htmlspecialchars( $icon );
 						}
 
 						$new_bar[$heading][] = $item;
@@ -106,7 +108,7 @@ class TournamentsMenuParserFunction {
 						//if ($link == '-')
 						//	continue;
 
-						$text = $line;
+						$text = htmlspecialchars( $line );
 						$link = $line;
 						$title = Title::newFromText( $link );
 						if ( $title ) {
@@ -115,12 +117,19 @@ class TournamentsMenuParserFunction {
 						} else {
 							$href = 'INVALID-TITLE';
 						}
+
+						if( $title == null ) {
+							$exists = false;
+						} else {
+							$exists = $title->exists();
+						}
+
 						$new_bar[$heading][] = array(
 							'text' => $text,
 							'href' => $href,
 							'id' => 'n-' . strtr($line, ' ', '-'),
 							'active' => false,
-							'exists' => $title->exists()
+							'exists' => $exists
 						);
 					}
 				}
