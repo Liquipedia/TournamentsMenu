@@ -24,7 +24,7 @@ class TournamentsMenuParserFunction {
 					continue;
 				if (strpos($line, '**') !== 0) {
 					$line = trim($line, '* ');
-					$heading = $line;
+					$heading = htmlspecialchars( $line );
 					if( !array_key_exists($heading, $new_bar) ) $new_bar[$heading] = array();
 				} else {
 					if (strpos($line, '|') !== false) { // sanity check
