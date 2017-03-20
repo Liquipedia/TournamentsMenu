@@ -5,9 +5,14 @@ class TournamentsMenuParserFunction {
 		$parser->setHook( 'tournaments', 'TournamentsMenuParserFunction::getTournamentsList' );
 	}
 	
-	public static function getTournamentsList( $parser ) {
+	public static function getTournamentsList( $parser, $params ) {
 		global $wgOut;
-		$message = 'Tournaments';
+		if( isset( $params['page'] ) && !empty( $params['page'] ) ) {
+			$message = $params['page'];
+		} else {
+			$message = 'Tournaments';
+		
+		}
 		$iconTemplatePrefix = 'LeagueIconSmall';
 		$return = '';
 
