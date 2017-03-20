@@ -6,11 +6,16 @@
 		"Alex Winkler"
 	],
 	"url": "http://wiki.teamliquid.net/",
-	"descriptionmsg": "Allows everyone to modify the tournaments menu point.",
+	"descriptionmsg": "tournamentsmenu-desc",
 	"license-name": "MIT",
 	"type": "other",
 	"requires": {
 		"MediaWiki": ">= 1.25.0"
+	},
+	"MessagesDirs": {
+		"TournamentsMenu": [
+			"i18n"
+		]
 	},
 	"AutoloadClasses": {
 		"TournamentsMenuHooks": "TournamentsMenuHooks.php",

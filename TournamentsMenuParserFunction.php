@@ -179,6 +179,9 @@ class TournamentsMenuParserFunction {
 				$return .= '</li>';
 			}
 			$return .= '</ul>';
+		} else {
+			global $wgMetaNamespace;
+			$return .= '<span class="error">' . wfMessage( 'tournamentlist-page-not-existing' )->params( $wgMetaNamespace . ':' . str_replace( $wgMetaNamespace . ':', '', $message ) )->text() . '</span>';
 		}
 		return array(trim($return), "markerType" => 'nowiki' );
 	}
