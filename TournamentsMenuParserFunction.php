@@ -19,7 +19,9 @@ class TournamentsMenuParserFunction {
 		if ( Title::newFromText( $message, NS_PROJECT )->exists() ) {
 			$titleFromText = Title::newFromText( $message, NS_PROJECT );
 			$article = WikiPage::factory($titleFromText);
-			$text = $article->getText(Revision::FOR_PUBLIC);
+			$revision = $article->getRevision();
+			$content = $revision->getContent(Revision::FOR_PUBLIC);
+			$text = ContentHandler::getContentText($content);
 			$lines = explode( "\n",  $text );
 
 			$new_bar = array();
