@@ -9,6 +9,8 @@ class TournamentsMenuHooks {
 				$titleFromText = Title::newFromText( $message, NS_PROJECT );
 				$wikipage = WikiPage::factory($titleFromText);
 				$revision = $wikipage->getRevision();
+				if (!$revision)
+					return true;
 				$content = $revision->getContent(Revision::FOR_PUBLIC);
 				$text = ContentHandler::getContentText($content);
 				$lines = explode( "\n",  $text );

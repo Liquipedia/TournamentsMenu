@@ -20,6 +20,8 @@ class TournamentsMenuParserFunction {
 			$titleFromText = Title::newFromText( $message, NS_PROJECT );
 			$wikipage = WikiPage::factory($titleFromText);
 			$revision = $wikipage->getRevision();
+			if (!$revision)
+				return '';
 			$content = $revision->getContent(Revision::FOR_PUBLIC);
 			$text = ContentHandler::getContentText($content);
 			$lines = explode( "\n",  $text );
