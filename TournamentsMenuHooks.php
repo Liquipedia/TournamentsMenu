@@ -2,31 +2,34 @@
 
 class TournamentsMenuHooks {
 	public static function onSkinBuildSidebar( $skin, &$bar ) {
-		if(isset($bar['TOURNAMENTS'])) {
+		if( isset( $bar['TOURNAMENTS'] ) ) {
 			$message = 'Tournaments';
 
-			if ( Title::newFromText( $message, NS_PROJECT )->exists() ) {
+			if( Title::newFromText( $message, NS_PROJECT )->exists() ) {
 				$titleFromText = Title::newFromText( $message, NS_PROJECT );
-				$wikipage = WikiPage::factory($titleFromText);
+				$wikipage = WikiPage::factory( $titleFromText );
 				$revision = $wikipage->getRevision();
-				if (!$revision)
+				if( !$revision ) {
 					return true;
-				$content = $revision->getContent(Revision::FOR_PUBLIC);
-				$text = ContentHandler::getContentText($content);
+				}
+				$content = $revision->getContent( Revision::FOR_PUBLIC );
+				$text = ContentHandler::getContentText( $content );
 				$lines = explode( "\n",  $text );
 
 				$new_bar = array();
 				$heading = '';
-				foreach ($lines as $line) {
-					if (strpos($line, '*') !== 0)
+				foreach( $lines as $line ) {
+					if( strpos( $line, '*' ) !== 0 ) {
 						continue;
-					if (strpos($line, '**') !== 0) {
+					} else if( strpos( $line, '**' ) !== 0 ) {
 						$line = trim($line, '* ');
 						$heading = htmlspecialchars( $line );
-						if( !array_key_exists($heading, $new_bar) ) $new_bar[$heading] = array();
+						if( !array_key_exists( $heading, $new_bar ) ) {
+							$new_bar[$heading] = array();
+						}
 					} else {
-						if (strpos($line, '|') !== false) { // sanity check
-							$line = array_map('trim', explode( '|' , trim($line, '* ') ) );
+						if(strpos( $line, '|' ) !== false) { // sanity check
+							$line = array_map( 'trim', explode( '|' , trim($line, '* ') ) );
 
 							foreach( $line as $key => $value ) {
 								$value = trim( $value );
@@ -34,17 +37,22 @@ class TournamentsMenuHooks {
 									if( !empty( trim( explode( '=', $value )[1] ) ) ) {
 										$startDate = htmlspecialchars( trim( explode( '=', $value )[1] ) );
 									}
-									unset($line[$key]);
+									unset( $line[$key] );
 								} else if( strpos( $value, 'enddate' ) === 0 ) {
 									if( !empty( trim( explode( '=', $value )[1] ) ) ) {
 										$endDate = htmlspecialchars( trim( explode( '=', $value )[1] ) );
 									}
-									unset($line[$key]);
+									unset( $line[$key] );
 								} else if( strpos( $value, 'icon' ) === 0 ) {
 									if( !empty( trim( explode( '=', $value )[1] ) ) ) {
 										$icon = htmlspecialchars( trim( explode( '=', $value )[1] ) );
 									}
-									unset($line[$key]);
+									unset( $line[$key] );
+								} else if( strpos( $value, 'filter' ) === 0 ) {
+									if( !empty( trim( explode( '=', $value )[1] ) ) ) {
+										$filter = htmlspecialchars( trim( explode( '=', $value )[1] ) );
+									}
+									unset( $line[$key] );
 								}
 							}
 							$line = array_values( $line );
@@ -52,26 +60,28 @@ class TournamentsMenuHooks {
 								$line[1] = $line[0];
 							}
 
-							
-							if($line[0] == null) {
+							if( $line[0] == null ) {
 								$link = '-';
 							} else {
 								$link = wfMessage( $line[0] )->inContentLanguage()->text();
 							}
-							if ($link == '-')
+							if( $link == '-' ) {
 								continue;
+							}
 
-							$text = wfMessage($line[1])->text();
-							if (wfMessage($line[1], $text)->inContentLanguage()->isBlank())
+							$text = wfMessage( $line[1] )->text();
+							if( wfMessage( $line[1], $text )->inContentLanguage()->isBlank() ) {
 								$text = $line[1];
-							if (wfMessage($line[0], $link)->inContentLanguage()->isBlank())
+							}
+							if( wfMessage( $line[0], $link )->inContentLanguage()->isBlank() ) {
 								$link = $line[0];
+							}
 
-							if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
+							if( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
 								$href = $link;
 							} else {
 								$title = Title::newFromText( $link );
-								if ( $title ) {
+								if( $title ) {
 									$title = $title->fixSpecialName();
 									$href = $title->getLocalURL();
 								} else {
@@ -81,7 +91,7 @@ class TournamentsMenuHooks {
 
 							$text = htmlspecialchars( $text ) ;
 
-							if( isset($startDate) || isset($endDate) ) {
+							if( isset( $startDate ) || isset( $endDate ) ) {
 								$text .= ' <small>(';
 								if( isset( $startDate ) ) {
 									$text .= $startDate;
@@ -101,20 +111,20 @@ class TournamentsMenuHooks {
 							$new_bar[$heading][] = array(
 								'text' => $text,
 								'href' => $href,
-								'id' => 'n-' . strtr($line[1], ' ', '-'),
+								'id' => 'n-' . strtr( $line[1], ' ', '-' ),
 								'active' => false
 							);
-							unset($startDate, $endDate, $icon);
+							unset( $startDate, $endDate, $icon, $filter );
 						} else { 
-							$line = trim($line, '* ');
+							$line = trim( $line, '* ' );
 							//$link = wfMsgForContent( $line );
-							//if ($link == '-')
+							//if($link == '-')
 							//	continue;
 
 							$text = htmlspecialchars( $line );
 							$link = $line;
 							$title = Title::newFromText( $link );
-							if ( $title ) {
+							if( $title ) {
 								$title = $title->fixSpecialName();
 								$href = $title->getLocalURL();
 							} else {
@@ -123,7 +133,7 @@ class TournamentsMenuHooks {
 							$new_bar[$heading][] = array(
 								'text' => $text,
 								'href' => $href,
-								'id' => 'n-' . strtr($line, ' ', '-'),
+								'id' => 'n-' . strtr( $line, ' ', '-' ),
 								'active' => false
 							);
 						}

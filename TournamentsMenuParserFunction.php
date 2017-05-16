@@ -5,51 +5,58 @@ class TournamentsMenuParserFunction {
 		$parser->setHook( 'tournaments', 'TournamentsMenuParserFunction::getTournamentsList' );
 	}
 	
-	public static function getTournamentsList( $parser, $params ) {
+	public static function getTournamentsList( $innertext, $params, $parser, $frame ) {
 		global $wgOut;
 		if( isset( $params['page'] ) && !empty( $params['page'] ) ) {
-			$message = $params['page'];
+			$message = htmlspecialchars( $params['page'] );
 		} else {
 			$message = 'Tournaments';
-		
+		}
+		if( isset( $params['filter'] ) && !empty( $params['filter'] ) ) {
+			$filters = explode( ',', htmlspecialchars( $params['filter'] ) );
 		}
 		$iconTemplatePrefix = 'LeagueIconSmall';
 		$return = '';
 
-		if ( Title::newFromText( $message, NS_PROJECT )->exists() ) {
+		if( Title::newFromText( $message, NS_PROJECT )->exists() ) {
 			$titleFromText = Title::newFromText( $message, NS_PROJECT );
-			$wikipage = WikiPage::factory($titleFromText);
+			$wikipage = WikiPage::factory( $titleFromText );
 			$revision = $wikipage->getRevision();
-			if (!$revision)
+			if( !$revision )
 				return '';
-			$content = $revision->getContent(Revision::FOR_PUBLIC);
-			$text = ContentHandler::getContentText($content);
+			$content = $revision->getContent( Revision::FOR_PUBLIC );
+			$text = ContentHandler::getContentText( $content );
 			$lines = explode( "\n",  $text );
 
 			$new_bar = array();
 			$heading = '';
-			foreach ($lines as $line) {
-				if (strpos($line, '*') !== 0)
+			foreach( $lines as $line ) {
+				if( strpos( $line, '*' ) !== 0 ) {
 					continue;
-				if (strpos($line, '**') !== 0) {
-					$line = trim($line, '* ');
+				} else if( strpos( $line, '**' ) !== 0 ) {
+					$line = trim( $line, '* ' );
 					$heading = htmlspecialchars( $line );
-					if( !array_key_exists($heading, $new_bar) ) $new_bar[$heading] = array();
+					if( !array_key_exists( $heading, $new_bar ) ) {
+						$new_bar[$heading] = array();
+					}
 				} else {
-					if (strpos($line, '|') !== false) { // sanity check
-						$line = array_map('trim', explode( '|' , trim($line, '* ') ) );
+					if( strpos( $line, '|' ) !== false ) { // sanity check
+						$line = array_map( 'trim', explode( '|' , trim( $line, '* ' ) ) );
 
 						foreach( $line as $key => $value ) {
 							$value = trim( $value );
 							if( strpos( $value, 'startdate' ) === 0 ) {
 								$startDate = trim( explode( '=', $value )[1] );
-								unset($line[$key]);
+								unset( $line[$key] );
 							} else if( strpos( $value, 'enddate' ) === 0 ) {
 								$endDate = trim( explode( '=', $value )[1] );
-								unset($line[$key]);
+								unset( $line[$key] );
 							} else if( strpos( $value, 'icon' ) === 0 ) {
 								$icon = trim( explode( '=', $value )[1] );
-								unset($line[$key]);
+								unset( $line[$key] );
+							} else if( strpos( $value, 'filter' ) === 0 ) {
+								$filter = trim( explode( '=', $value )[1] );
+								unset( $line[$key] );
 							}
 						}
 						$line = array_values( $line );
@@ -62,20 +69,22 @@ class TournamentsMenuParserFunction {
 						} else {
 							$link = wfMessage( $line[0] )->inContentLanguage()->text();
 						}
-						if ($link == '-')
+						if($link == '-')
 							continue;
 
-						$text = wfMessage($line[1])->text();
-						if (wfMessage($line[1], $text)->inContentLanguage()->isBlank())
+						$text = wfMessage( $line[1] )->text();
+						if(wfMessage( $line[1], $text )->inContentLanguage()->isBlank()) {
 							$text = $line[1];
-						if (wfMessage($line[0], $link)->inContentLanguage()->isBlank())
+						}
+						if(wfMessage( $line[0], $link )->inContentLanguage()->isBlank()) {
 							$link = $line[0];
+						}
 
-						if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
+						if( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
 							$href = $link;
 						} else {
 							$title = Title::newFromText( $link );
-							if ( $title ) {
+							if( $title ) {
 								$title = $title->fixSpecialName();
 								$href = $title->getLocalURL();
 							} else {
@@ -94,7 +103,7 @@ class TournamentsMenuParserFunction {
 						$item = array(
 							'text' => $text,
 							'href' => $href,
-							'id' => 'n-' . strtr($line[1], ' ', '-') . '-mainpage',
+							'id' => 'n-' . strtr( $line[1], ' ', '-' ) . '-mainpage',
 							'active' => false,
 							'exists' => $exists
 						);
@@ -108,19 +117,22 @@ class TournamentsMenuParserFunction {
 						if( isset( $icon ) && !empty( trim( $icon ) ) ) {
 							$item['icon'] = htmlspecialchars( $icon );
 						}
+						if( isset( $filter ) && !empty( trim( $filter ) ) ) {
+							$item['filter'] = htmlspecialchars( $filter );
+						}
 
 						$new_bar[$heading][] = $item;
-						unset($startDate, $endDate, $icon);
+						unset( $startDate, $endDate, $icon, $filter );
 					} else { 
-						$line = trim($line, '* ');
+						$line = trim( $line, '* ' );
 						//$link = wfMsgForContent( $line );
-						//if ($link == '-')
+						//if($link == '-')
 						//	continue;
 
 						$text = htmlspecialchars( $line );
 						$link = $line;
 						$title = Title::newFromText( $link );
-						if ( $title ) {
+						if( $title ) {
 							$title = $title->fixSpecialName();
 							$href = $title->getLocalURL();
 						} else {
@@ -136,29 +148,40 @@ class TournamentsMenuParserFunction {
 						$new_bar[$heading][] = array(
 							'text' => $text,
 							'href' => $href,
-							'id' => 'n-' . strtr($line, ' ', '-'),
+							'id' => 'n-' . strtr( $line, ' ', '-' ),
 							'active' => false,
 							'exists' => $exists
 						);
 					}
 				}
 			}
-			
+
+			if( isset( $filters ) && count( $filters ) > 1 ) {
+				$return .= '<form>';
+				$helperA = '';
+				$helperB = '';
+				foreach( $filters as $filter ) {
+					$helperA .= '<input type="checkbox" id="tournaments-list-filter-' . $filter . '">';
+					$helperB .= '<label for="tournaments-list-filter-' . $filter . '"></label>';
+				}
+				$return .= $helperA . $helperB;
+				unset( $helperA, $helperB );
+			}
 			$return .= '<ul class="tournaments-list">';
-			foreach($new_bar as $type_name => $type_list) {
+			foreach( $new_bar as $type_name => $type_list ) {
 				$return .= '<li>';
 				$return .= '<span class="tournaments-list-heading">' . $type_name . '</span>';
 				$return .= '<ul class="tournaments-list-type-list">';
-				foreach($type_list as $tournament_arr) {
-					$return .= '<li>';
-					$return .= '<a ' . ((!$tournament_arr['exists'])?'class="new" ':'') . 'href="' . $tournament_arr['href'] . '">';
+				foreach( $type_list as $tournament_arr ) {
+					$return .= '<li' . ( isset( $tournament_arr['filter'] )?' class="filter-' . $tournament_arr['filter'] . '"':'' ) . '>';
+					$return .= '<a ' . ( ( !$tournament_arr['exists'] )?'class="new" ':'' ) . 'href="' . $tournament_arr['href'] . '">';
 					$return .= '<span class="tournaments-list-name">';
-					if(isset($tournament_arr['icon'])) {
+					if( isset( $tournament_arr['icon'] ) ) {
 						$iconTitle = Title::newFromText( $iconTemplatePrefix . '/' . $tournament_arr['icon'], NS_TEMPLATE );
 					} else {
 						$iconTitle = null;
 					}
-					if( isset( $tournament_arr['icon'] ) && ( $iconTitle != null ) && ( $iconTitle->exists() ) && ( $wgOut->getTitle() != null ) ) {
+					if( isset( $tournament_arr['icon'] ) && ( $iconTitle != null ) && ( $iconTitle->exists() ) && ( $parser->getTitle() != null ) ) {
 						$return .= str_replace( '<p>', '', str_replace( '</p>', '', $wgOut->parse( '{{' . $iconTemplatePrefix . '/' . $tournament_arr['icon'] . '|link=}}' ) ) );
 					}
 					$return .= $tournament_arr['text'] . '</span>';
@@ -183,10 +206,13 @@ class TournamentsMenuParserFunction {
 				$return .= '</li>';
 			}
 			$return .= '</ul>';
+			if( isset( $filters ) && count( $filters ) > 1 ) {
+				$return .= '</form>';
+			}
 		} else {
 			global $wgMetaNamespace;
 			$return .= '<span class="error">' . wfMessage( 'tournamentsmenu-page-not-existing' )->params( $wgMetaNamespace . ':' . str_replace( $wgMetaNamespace . ':', '', $message ) )->text() . '</span>';
 		}
-		return array(trim($return), "markerType" => 'nowiki' );
+		return array( trim( $return ), 'markerType' => 'nowiki' );
 	}
 }
