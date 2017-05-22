@@ -182,7 +182,9 @@ class TournamentsMenuParserFunction {
 						$iconTitle = null;
 					}
 					if( isset( $tournament_arr['icon'] ) && ( $iconTitle != null ) && ( $iconTitle->exists() ) && ( $parser->getTitle() != null ) ) {
-						$return .= str_replace( '<p>', '', str_replace( '</p>', '', $wgOut->parse( '{{' . $iconTemplatePrefix . '/' . $tournament_arr['icon'] . '|link=}}' ) ) );
+						if( !$wgCommandLineMode ) {
+							$return .= str_replace( '<p>', '', str_replace( '</p>', '', $wgOut->parse( '{{' . $iconTemplatePrefix . '/' . $tournament_arr['icon'] . '|link=}}' ) ) );
+						}
 					}
 					$return .= $tournament_arr['text'] . '</span>';
 					$return .= '<small class="tournaments-list-dates">';
