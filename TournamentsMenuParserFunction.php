@@ -6,7 +6,7 @@ class TournamentsMenuParserFunction {
 	}
 	
 	public static function getTournamentsList( $innertext, $params, $parser, $frame ) {
-		global $wgOut;
+		global $wgOut, $wgCommandLineMode;
 		if( isset( $params['page'] ) && !empty( $params['page'] ) ) {
 			$message = htmlspecialchars( $params['page'] );
 		} else {
