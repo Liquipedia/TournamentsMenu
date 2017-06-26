@@ -111,6 +111,7 @@ class TournamentsMenuHooks {
 								$text .= ')</small>';
 							}
 */
+
 							if( isset( $icon ) ) {
 								$iconTitle = Title::newFromText( $iconTemplatePrefix . '/' . $icon, NS_TEMPLATE );
 								if( ( $iconTitle != null ) && ( $iconTitle->exists() ) && ( $skin->getTitle() != null ) ) {
