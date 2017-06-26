@@ -2,8 +2,10 @@
 
 class TournamentsMenuHooks {
 	public static function onSkinBuildSidebar( $skin, &$bar ) {
+		global $wgOut, $wgCommandLineMode;
 		if( isset( $bar['TOURNAMENTS'] ) ) {
 			$message = 'Tournaments';
+			$iconTemplatePrefix = 'LeagueIconSmall';
 
 			if( Title::newFromText( $message, NS_PROJECT )->exists() ) {
 				$titleFromText = Title::newFromText( $message, NS_PROJECT );
@@ -91,6 +93,7 @@ class TournamentsMenuHooks {
 
 							$text = htmlspecialchars( $text ) ;
 
+/*
 							if( isset( $startDate ) || isset( $endDate ) ) {
 								$text .= ' <small>(';
 								if( isset( $startDate ) ) {
@@ -106,6 +109,15 @@ class TournamentsMenuHooks {
 									$text .= $endDate;
 								}
 								$text .= ')</small>';
+							}
+*/
+							if( isset( $icon ) ) {
+								$iconTitle = Title::newFromText( $iconTemplatePrefix . '/' . $icon, NS_TEMPLATE );
+								if( ( $iconTitle != null ) && ( $iconTitle->exists() ) && ( $skin->getTitle() != null ) ) {
+									if( !$wgCommandLineMode ) {
+										$text = str_replace( '<p>', '', str_replace( '</p>', '', $wgOut->parse( '{{' . $iconTemplatePrefix . '/' . $icon . '|link=}}' ) ) ) . ' ' . $text;
+									}
+								}
 							}
 
 							$new_bar[$heading][] = array(
