@@ -116,7 +116,7 @@ class TournamentsMenuHooks {
 								$iconTitle = Title::newFromText( $iconTemplatePrefix . '/' . $icon, NS_TEMPLATE );
 								if( ( $iconTitle != null ) && ( $iconTitle->exists() ) && ( $skin->getTitle() != null ) ) {
 									if( !$wgCommandLineMode ) {
-										$text = str_replace( '<p>', '', str_replace( '</p>', '', $wgOut->parse( '{{' . $iconTemplatePrefix . '/' . $icon . '|link=}}' ) ) ) . ' ' . $text;
+										$text = $wgOut->parseInline( '{{' . $iconTemplatePrefix . '/' . $icon . '|link=}}' ) . ' ' . $text;
 									}
 								}
 							}
