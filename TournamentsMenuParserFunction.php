@@ -185,7 +185,11 @@ class TournamentsMenuParserFunction {
 					}
 					if ( isset( $tournament_arr[ 'icon' ] ) && ( $iconTitle != null ) && ( $iconTitle->exists() ) && ( $parser->getTitle() != null ) ) {
 						if ( !$wgCommandLineMode ) {
-							$return .= $wgOut->parseInline( '{{' . $iconTemplatePrefix . '/' . $tournament_arr[ 'icon' ] . '|link=}}', false );
+							$iconHTML = $wgOut->parseInline( '{{' . $iconTemplatePrefix . '/' . $tournament_arr[ 'icon' ] . '|link=}}', false );
+							if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
+								$iconHTML = substr( $iconHTML, strlen( '<div class="mw-parser-output">' ), -strlen( '</div>' ) );
+							}
+							$return .= $iconHTML;
 						}
 					}
 					$return .= $tournament_arr[ 'text' ] . '</span>';
