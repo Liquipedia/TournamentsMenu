@@ -1,16 +1,16 @@
 {
 	"name": "TournamentsMenu",
-	"version": "1.4",
+	"version": "1.5.0",
 	"author": [
 		"Philip Becker-Ehmck",
 		"[https://fo-nttax.de Alex Winkler]"
 	],
-	"url": "http://liquipedia.net/",
+	"url": "https://liquipedia.net/",
 	"descriptionmsg": "tournamentsmenu-desc",
 	"license-name": "MIT",
 	"type": "other",
 	"requires": {
-		"MediaWiki": ">= 1.25.0"
+		"MediaWiki": ">= 1.31.0"
 	},
 	"MessagesDirs": {
 		"TournamentsMenu": [
