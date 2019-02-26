@@ -3,7 +3,8 @@
 class TournamentsMenuHooks {
 
 	public static function onSkinBuildSidebar( $skin, &$bar ) {
-		global $wgOut, $wgCommandLineMode;
+		$wgOut = $skin->getOutput();
+		$wgCommandLineMode = $wgOut->getConfig()->get( 'CommandLineMode' );
 		if ( isset( $bar[ 'TOURNAMENTS' ] ) ) {
 			$message = 'Tournaments';
 			$iconTemplatePrefix = 'LeagueIconSmall';

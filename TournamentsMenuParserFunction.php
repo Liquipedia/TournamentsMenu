@@ -7,7 +7,6 @@ class TournamentsMenuParserFunction {
 	}
 
 	public static function getTournamentsList( $innertext, $params, $parser, $frame ) {
-		global $wgOut, $wgCommandLineMode;
 		if ( isset( $params[ 'page' ] ) && !empty( $params[ 'page' ] ) ) {
 			$message = htmlspecialchars( $params[ 'page' ] );
 		} else {
@@ -184,13 +183,13 @@ class TournamentsMenuParserFunction {
 						$iconTitle = null;
 					}
 					if ( isset( $tournament_arr[ 'icon' ] ) && ( $iconTitle != null ) && ( $iconTitle->exists() ) && ( $parser->getTitle() != null ) ) {
-						if ( !$wgCommandLineMode ) {
-							$iconHTML = $wgOut->parseInline( '{{' . $iconTemplatePrefix . '/' . $tournament_arr[ 'icon' ] . '|link=}}', false );
-							if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
-								$iconHTML = substr( $iconHTML, strlen( '<div class="mw-parser-output">' ), -strlen( '</div>' ) );
-							}
-							$return .= $iconHTML;
+						$iconHTML = $parser->parse( '{{' . $iconTemplatePrefix . '/' . $tournament_arr[ 'icon' ] . '|link=}}', $parser->getTitle(), $parser->getOptions(), false, false )->getText();
+						if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
+							$from = strlen( '<div class="mw-parser-output"><p>' );
+							$to = strpos( $iconHTML, '</p>' );
+							$iconHTML = substr( $iconHTML, $from, $to - $from );
 						}
+						$return .= $iconHTML;
 					}
 					$return .= $tournament_arr[ 'text' ] . '</span>';
 					$return .= '<small class="tournaments-list-dates">';
