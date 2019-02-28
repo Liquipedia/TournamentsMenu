@@ -184,10 +184,12 @@ class TournamentsMenuParserFunction {
 					}
 					if ( isset( $tournament_arr[ 'icon' ] ) && ( $iconTitle != null ) && ( $iconTitle->exists() ) && ( $parser->getTitle() != null ) ) {
 						$iconHTML = $parser->parse( '{{' . $iconTemplatePrefix . '/' . $tournament_arr[ 'icon' ] . '|link=}}', $parser->getTitle(), $parser->getOptions(), false, false )->getText();
-						if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
-							$from = strlen( '<div class="mw-parser-output"><p>' );
-							$to = strpos( $iconHTML, '</p>' );
-							$iconHTML = substr( $iconHTML, $from, $to - $from );
+						$from = '<span';
+						$to = '</span>';
+						if ( strpos( $iconHTML, $from ) !== false && strpos( $iconHTML, $to ) !== false ) {
+							$fromPos = strpos( $iconHTML, $from );
+							$toPos = strpos( $iconHTML, $to ) + strlen( $to );
+							$iconHTML = substr( $iconHTML, $fromPos, $toPos - $fromPos );
 						}
 						$return .= $iconHTML;
 					}
