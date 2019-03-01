@@ -182,7 +182,7 @@ class TournamentsMenuParserFunction {
 					} else {
 						$iconTitle = null;
 					}
-					if ( isset( $tournament_arr[ 'icon' ] ) && ( $iconTitle != null ) && ( $iconTitle->exists() ) && ( $parser->getTitle() != null ) ) {
+					if ( isset( $tournament_arr[ 'icon' ] ) && !is_null( $iconTitle ) && $iconTitle->exists() && !is_null( $parser->getTitle() ) ) {
 						$iconHTML = $parser->parse( '{{' . $iconTemplatePrefix . '/' . $tournament_arr[ 'icon' ] . '|link=}}', $parser->getTitle(), $parser->getOptions(), false, false )->getText();
 						$from = '<span';
 						$to = '</span>';
