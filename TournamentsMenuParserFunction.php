@@ -183,9 +183,10 @@ class TournamentsMenuParserFunction {
 						$iconTitle = null;
 					}
 					if ( isset( $tournament_arr[ 'icon' ] ) && !is_null( $iconTitle ) && $iconTitle->exists() && !is_null( $parser->getTitle() ) ) {
-						$parserOptions = clone $parser->getOptions();
+						$parserOptions = $parser->getOptions();
 						$parserOptions->setOption( 'enableLimitReport', false );
 						$iconHTML = $parser->parse( '{{' . $iconTemplatePrefix . '/' . $tournament_arr[ 'icon' ] . '|link=}}', $parser->getTitle(), $parserOptions, false, false )->getText();
+						$parserOptions->setOption( 'enableLimitReport', true );
 						$from = '<span';
 						$to = '</span>';
 						if ( strpos( $iconHTML, $from ) !== false && strpos( $iconHTML, $to ) !== false ) {
