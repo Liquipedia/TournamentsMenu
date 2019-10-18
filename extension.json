@@ -1,8 +1,7 @@
 {
 	"name": "TournamentsMenu",
-	"version": "1.6.0",
+	"version": "2.0.0",
 	"author": [
-		"Philip Becker-Ehmck",
 		"[https://fo-nttax.de Alex Winkler]"
 	],
 	"url": "https://liquipedia.net/",
@@ -17,16 +16,15 @@
 			"i18n"
 		]
 	},
-	"AutoloadClasses": {
-		"TournamentsMenuHooks": "TournamentsMenuHooks.php",
-		"TournamentsMenuParserFunction": "TournamentsMenuParserFunction.php"
+	"AutoloadNamespaces": {
+		"Liquipedia\\TournamentsMenu\\": "src/"
 	},
 	"Hooks": {
 		"SkinBuildSidebar": [
-			"TournamentsMenuHooks::onSkinBuildSidebar"
+			"Liquipedia\\TournamentsMenu\\Hooks::onSkinBuildSidebar"
 		],
 		"ParserFirstCallInit": [
-			"TournamentsMenuParserFunction::onParserFirstCallInit"
+			"Liquipedia\\TournamentsMenu\\ParserFunction::onParserFirstCallInit"
 		]
 	},
 	"manifest_version": 1
