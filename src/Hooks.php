@@ -52,8 +52,7 @@ class Hooks {
 									if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
 										$iconHTML = substr(
 											$iconHTML,
-											strlen(
-												'<div class="mw-parser-output">' ),
+											strlen( '<div class="mw-parser-output">' ),
 											-strlen( '</div>' )
 										);
 									}
