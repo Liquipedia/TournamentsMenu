@@ -71,6 +71,7 @@ class ParserFunction {
 					$return .= '<span class="tournaments-list-name">';
 
 					// Should we add an icon
+					// Else Should we add an iconFile (File: input)
 					if ( array_key_exists( 'icon', $tournament ) ) {
 						$iconTitle = Title::newFromText(
 								$iconTemplatePrefix . '/' . $tournament[ 'icon' ],
@@ -87,6 +88,37 @@ class ParserFunction {
 							$parserOptions->setOption( 'enableLimitReport', false );
 							$iconHTML = $parser->parse(
 									'{{' . $iconTemplatePrefix . '/' . $tournament[ 'icon' ] . '|link=}}',
+									$parser->getTitle(),
+									$parserOptions,
+									false,
+									false
+								)->getText();
+							$parserOptions->setOption( 'enableLimitReport', $wasParserReportEnabled );
+							$from = '<span';
+							$to = '</span>';
+							if ( strpos( $iconHTML, $from ) !== false && strpos( $iconHTML, $to ) !== false ) {
+								$fromPos = strpos( $iconHTML, $from );
+								$toPos = strpos( $iconHTML, $to ) + strlen( $to );
+								$iconHTML = substr( $iconHTML, $fromPos, $toPos - $fromPos );
+							}
+							$return .= $iconHTML;
+						}
+					} elseif ( array_key_exists( 'iconFile', $tournament ) ) {
+						$iconFileTitle = Title::newFromText(
+								$iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconFile' ],
+								NS_TEMPLATE
+						);
+						if (
+							array_key_exists( 'iconFile', $tournament )
+							&& !is_null( $iconFileTitle )
+							&& $iconFileTitle->exists()
+							&& !is_null( $parser->getTitle() )
+						) {
+							$parserOptions = $parser->getOptions();
+							$wasParserReportEnabled = $parserOptions->getOption( 'enableLimitReport' );
+							$parserOptions->setOption( 'enableLimitReport', false );
+							$iconHTML = $parser->parse(
+									'{{' . $iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconFile' ] . '|link=}}',
 									$parser->getTitle(),
 									$parserOptions,
 									false,
