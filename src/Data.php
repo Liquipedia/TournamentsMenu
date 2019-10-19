@@ -59,6 +59,11 @@ class Data {
 									$icon = htmlspecialchars( trim( explode( '=', $value )[ 1 ] ) );
 								}
 								unset( $line[ $key ] );
+							} elseif ( strpos( $value, 'iconFile' ) === 0 ) {
+								if ( !empty( trim( explode( '=', $value )[ 1 ] ) ) ) {
+									$iconFile = htmlspecialchars( trim( explode( '=', $value )[ 1 ] ) );
+								}
+								unset( $line[ $key ] );
 							} elseif ( strpos( $value, 'filter' ) === 0 ) {
 								if ( !empty( trim( explode( '=', $value )[ 1 ] ) ) ) {
 									$filter = htmlspecialchars( trim( explode( '=', $value )[ 1 ] ) );
@@ -123,10 +128,13 @@ class Data {
 						if ( isset( $icon ) ) {
 							$data[ 'icon' ] = $icon;
 						}
+						if ( isset( $iconFile ) ) {
+							$data[ 'iconFile' ] = $iconFile;
+						}
 						if ( isset( $filter ) ) {
 							$data[ 'filter' ] = $filter;
 						}
-						unset( $startDate, $endDate, $icon, $filter );
+						unset( $startDate, $endDate, $icon, $iconFile, $filter );
 
 						$tournamentData[ $heading ][] = $data;
 					} else {
