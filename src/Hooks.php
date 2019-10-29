@@ -59,6 +59,27 @@ class Hooks {
 									$text = $iconHTML . ' ' . $text;
 								}
 							}
+						elseif ( array_key_exists( 'iconFile', $tournament ) ) {
+							$iconFileTitle = Title::newFromText(
+									$iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconFile' ],
+									NS_TEMPLATE
+							);
+							if ( !is_null( $iconFileTitle ) && $iconFileTitle->exists() && !is_null( $skin->getTitle() ) ) {
+								if ( !$wgCommandLineMode ) {
+									$iconHTML = $wgOut->parseInline(
+										'{{' . $iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconFile' ] . '|link=}}',
+										false
+									);
+									if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
+										$iconHTML = substr(
+											$iconHTML,
+											strlen( '<div class="mw-parser-output">' ),
+											-strlen( '</div>' )
+										);
+									}
+									$text = $iconHTML . ' ' . $text;
+								}
+							}
 						}
 
 						$data[ 'text' ] = $text;
