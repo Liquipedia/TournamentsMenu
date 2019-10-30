@@ -71,7 +71,7 @@ class ParserFunction {
 					$return .= '<span class="tournaments-list-name">';
 
 					// Should we add an icon
-					// Else Should we add an iconFile (File: input)
+					// icon = SMW.Is part of series; iconFile = SMW.Has icon
 					if ( array_key_exists( 'icon', $tournament ) ) {
 						$iconTitle = Title::newFromText(
 								$iconTemplatePrefix . '/' . $tournament[ 'icon' ],
