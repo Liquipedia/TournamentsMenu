@@ -38,6 +38,7 @@ class Hooks {
 						];
 
 						// Should we add an icon
+						// icon = SMW.Is part of series; iconFile = SMW.Has icon
 						if ( array_key_exists( 'icon', $tournament ) ) {
 							$iconTitle = Title::newFromText(
 									$iconTemplatePrefix . '/' . $tournament[ 'icon' ],
