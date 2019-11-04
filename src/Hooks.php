@@ -60,7 +60,7 @@ class Hooks {
 									$text = $iconHTML . ' ' . $text;
 								}
 							}
-						elseif ( array_key_exists( 'f', $tournament ) ) {
+						elseif ( array_key_exists( 'iconfile', $tournament ) ) {
 							$iconfileTitle = Title::newFromText(
 									$iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconfile' ],
 									NS_TEMPLATE
