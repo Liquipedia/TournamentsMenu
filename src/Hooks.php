@@ -38,7 +38,7 @@ class Hooks {
 						];
 
 						// Should we add an icon
-						// icon = SMW.Is part of series; iconFile = SMW.Has icon
+						// icon = SMW.Is part of series; iconfile = SMW.Has icon
 						if ( array_key_exists( 'icon', $tournament ) ) {
 							$iconTitle = Title::newFromText(
 									$iconTemplatePrefix . '/' . $tournament[ 'icon' ],
@@ -60,15 +60,15 @@ class Hooks {
 									$text = $iconHTML . ' ' . $text;
 								}
 							}
-						elseif ( array_key_exists( 'iconFile', $tournament ) ) {
-							$iconFileTitle = Title::newFromText(
-									$iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconFile' ],
+						elseif ( array_key_exists( 'f', $tournament ) ) {
+							$iconfileTitle = Title::newFromText(
+									$iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconfile' ],
 									NS_TEMPLATE
 							);
-							if ( !is_null( $iconFileTitle ) && $iconFileTitle->exists() && !is_null( $skin->getTitle() ) ) {
+							if ( !is_null( $iconfileTitle ) && $iconfileTitle->exists() && !is_null( $skin->getTitle() ) ) {
 								if ( !$wgCommandLineMode ) {
 									$iconHTML = $wgOut->parseInline(
-										'{{' . $iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconFile' ] . '|link=}}',
+										'{{' . $iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconfile' ] . '|link=}}',
 										false
 									);
 									if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
