@@ -62,7 +62,7 @@ class Hooks {
 							}
 						} elseif ( array_key_exists( 'iconfile', $tournament ) ) {
 							$iconfileTitle = Title::newFromText(
-									$iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconfile' ],
+									$iconTemplatePrefix . '/mainpageTST',
 									NS_TEMPLATE
 							);
 							if ( !is_null( $iconfileTitle ) && $iconfileTitle->exists() && !is_null( $skin->getTitle() ) ) {

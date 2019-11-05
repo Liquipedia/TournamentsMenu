@@ -105,7 +105,7 @@ class ParserFunction {
 						}
 					} elseif ( array_key_exists( 'iconfile', $tournament ) ) {
 						$iconfileTitle = Title::newFromText(
-								$iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconfile' ],
+								$iconTemplatePrefix . '/mainpageTST',
 								NS_TEMPLATE
 						);
 						if (
