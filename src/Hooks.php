@@ -59,40 +59,40 @@ class Hooks {
 									}
 									$text = $iconHTML . ' ' . $text;
 								}
-							} elseif ( array_key_exists( 'iconfile', $tournament ) ) {
-								$iconfileTitle = Title::newFromText(
-										$iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconfile' ],
-										NS_TEMPLATE
-								);
-								if ( !is_null( $iconfileTitle ) && $iconfileTitle->exists() && !is_null( $skin->getTitle() ) ) {
-									if ( !$wgCommandLineMode ) {
-										$iconHTML = $wgOut->parseInline(
-											'{{' . $iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconfile' ] . '|link=}}',
-											false
+							}
+						} elseif ( array_key_exists( 'iconfile', $tournament ) ) {
+							$iconfileTitle = Title::newFromText(
+									$iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconfile' ],
+									NS_TEMPLATE
+							);
+							if ( !is_null( $iconfileTitle ) && $iconfileTitle->exists() && !is_null( $skin->getTitle() ) ) {
+								if ( !$wgCommandLineMode ) {
+									$iconHTML = $wgOut->parseInline(
+										'{{' . $iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconfile' ] . '|link=}}',
+										false
+									);
+									if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
+										$iconHTML = substr(
+											$iconHTML,
+											strlen( '<div class="mw-parser-output">' ),
+											-strlen( '</div>' )
 										);
-										if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
-											$iconHTML = substr(
-												$iconHTML,
-												strlen( '<div class="mw-parser-output">' ),
-												-strlen( '</div>' )
-											);
-										}
-										$text = $iconHTML . ' ' . $text;
 									}
+									$text = $iconHTML . ' ' . $text;
 								}
 							}
-
-							$data[ 'text' ] = $text;
-
-							$tournamentsMenu[ $heading ][] = $data;
 						}
-					}
 
-					$bar[ 'TOURNAMENTS' ] = $tournamentsMenu;
+						$data[ 'text' ] = $text;
+
+						$tournamentsMenu[ $heading ][] = $data;
+					}
 				}
+
+				$bar[ 'TOURNAMENTS' ] = $tournamentsMenu;
 			}
-			return true;
 		}
+		return true;
 	}
 
 }
