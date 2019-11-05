@@ -54,14 +54,14 @@ class Data {
 									$endDate = htmlspecialchars( trim( explode( '=', $value )[ 1 ] ) );
 								}
 								unset( $line[ $key ] );
-							} elseif ( strpos( $value, 'icon' ) === 0 ) {
-								if ( !empty( trim( explode( '=', $value )[ 1 ] ) ) ) {
-									$icon = htmlspecialchars( trim( explode( '=', $value )[ 1 ] ) );
-								}
-								unset( $line[ $key ] );
 							} elseif ( strpos( $value, 'iconfile' ) === 0 ) {
 								if ( !empty( trim( explode( '=', $value )[ 1 ] ) ) ) {
 									$iconfile = htmlspecialchars( trim( explode( '=', $value )[ 1 ] ) );
+								}
+								unset( $line[ $key ] );
+							} elseif ( strpos( $value, 'icon' ) === 0 ) {
+								if ( !empty( trim( explode( '=', $value )[ 1 ] ) ) ) {
+									$icon = htmlspecialchars( trim( explode( '=', $value )[ 1 ] ) );
 								}
 								unset( $line[ $key ] );
 							} elseif ( strpos( $value, 'filter' ) === 0 ) {
