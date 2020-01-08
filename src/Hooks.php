@@ -13,7 +13,8 @@ class Hooks {
 	 * @return array|null tournament list
 	 */
 	public static function onSkinBuildSidebar( $skin, &$bar ) {
-		if ( array_key_exists( 'TOURNAMENTS', $bar ) ) {
+		$key = 'TOURNAMENTS';
+		if ( array_key_exists( $key, $bar ) ) {
 			$wgOut = $skin->getOutput();
 			$wgCommandLineMode = $wgOut->getConfig()->get( 'CommandLineMode' );
 			$message = Data::getStandardPageName();
@@ -89,7 +90,7 @@ class Hooks {
 					}
 				}
 
-				$bar[ 'TOURNAMENTS' ] = $tournamentsMenu;
+				$bar[ $key ] = $tournamentsMenu;
 			}
 		}
 		return true;
