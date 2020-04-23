@@ -1,5 +1,5 @@
-Tournament List Extension
-=========================
+# Tournament List Extension
+![Code Style](https://github.com/Liquipedia/TournamentsMenu/workflows/Code%20Style/badge.svg)
 
 MediaWiki Extension for Liquipedia, provides the editable tournament menu on top of the LiquiFlow and Bruinen MediaWiki skins
 
