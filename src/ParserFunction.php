@@ -39,7 +39,7 @@ class ParserFunction {
 
 		$titleFromText = Title::newFromText( $message, NS_PROJECT );
 		$tournamentsData = Data::getFromTitle( $titleFromText );
-		if ( !is_null( $tournamentsData ) ) {
+		if ( $tournamentsData !== null ) {
 			if ( isset( $filters ) && count( $filters ) > 1 ) {
 				$return .= '<form>';
 				$helperA = '';
@@ -79,9 +79,9 @@ class ParserFunction {
 						);
 						if (
 							array_key_exists( 'icon', $tournament )
-							&& !is_null( $iconTitle )
+							&& $iconTitle !== null
 							&& $iconTitle->exists()
-							&& !is_null( $parser->getTitle() )
+							&& $parser->getTitle() !== null
 						) {
 							$parserOptions = $parser->getOptions();
 							$wasParserReportEnabled = $parserOptions->getOption( 'enableLimitReport' );
@@ -110,9 +110,9 @@ class ParserFunction {
 						);
 						if (
 							array_key_exists( 'iconfile', $tournament )
-							&& !is_null( $iconfileTitle )
+							&& $iconfileTitle !== null
 							&& $iconfileTitle->exists()
-							&& !is_null( $parser->getTitle() )
+							&& $parser->getTitle() !== null
 						) {
 							$parserOptions = $parser->getOptions();
 							$wasParserReportEnabled = $parserOptions->getOption( 'enableLimitReport' );

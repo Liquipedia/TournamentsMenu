@@ -97,14 +97,14 @@ class Data {
 							$href = $link;
 						} else {
 							$targetTitle = Title::newFromText( $link );
-							if ( !is_null( $targetTitle ) ) {
+							if ( $targetTitle !== null ) {
 								$targetTitle = $targetTitle->fixSpecialName();
 								$href = $targetTitle->getLocalURL();
 							} else {
 								$href = 'INVALID-TITLE';
 							}
 						}
-						if ( is_null( $targetTitle ) ) {
+						if ( $targetTitle === null ) {
 							$exists = false;
 						} else {
 							$exists = $targetTitle->exists();
@@ -142,7 +142,7 @@ class Data {
 						$text = htmlspecialchars( $line );
 						$link = $line;
 						$targetTitle = Title::newFromText( $link );
-						if ( !is_null( $targetTitle ) ) {
+						if ( $targetTitle !== null ) {
 							$targetTitle = $targetTitle->fixSpecialName();
 							$href = $targetTitle->getLocalURL();
 						} else {

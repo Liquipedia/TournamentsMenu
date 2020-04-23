@@ -23,7 +23,7 @@ class Hooks {
 			$titleFromText = Title::newFromText( $message, NS_PROJECT );
 			$tournamentsData = Data::getFromTitle( $titleFromText );
 
-			if ( !is_null( $tournamentsData ) ) {
+			if ( $tournamentsData !== null ) {
 				$tournamentsMenu = [];
 
 				foreach ( $tournamentsData as $heading => $tournaments ) {
@@ -45,7 +45,7 @@ class Hooks {
 									$iconTemplatePrefix . '/' . $tournament[ 'icon' ],
 									NS_TEMPLATE
 							);
-							if ( !is_null( $iconTitle ) && $iconTitle->exists() && !is_null( $skin->getTitle() ) ) {
+							if ( $iconTitle !== null && $iconTitle->exists() && $skin->getTitle() !== null ) {
 								if ( !$wgCommandLineMode ) {
 									$iconHTML = $wgOut->parseInline(
 										'{{' . $iconTemplatePrefix . '/' . $tournament[ 'icon' ] . '|link=}}',
@@ -66,7 +66,7 @@ class Hooks {
 									$iconTemplatePrefix . '/mainpageTST',
 									NS_TEMPLATE
 							);
-							if ( !is_null( $iconfileTitle ) && $iconfileTitle->exists() && !is_null( $skin->getTitle() ) ) {
+							if ( $iconfileTitle !== null && $iconfileTitle->exists() && $skin->getTitle() !== null ) {
 								if ( !$wgCommandLineMode ) {
 									$iconHTML = $wgOut->parseInline(
 										'{{' . $iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconfile' ] . '|link=}}',
