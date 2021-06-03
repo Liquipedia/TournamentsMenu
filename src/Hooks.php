@@ -47,7 +47,7 @@ class Hooks {
 							);
 							if ( $iconTitle !== null && $iconTitle->exists() && $skin->getTitle() !== null ) {
 								if ( !$wgCommandLineMode ) {
-									$iconHTML = $wgOut->parseInline(
+									$iconHTML = $wgOut->parseInlineAsInterface(
 										'{{' . $iconTemplatePrefix . '/' . $tournament[ 'icon' ] . '|link=}}',
 										false
 									);
@@ -68,7 +68,7 @@ class Hooks {
 							);
 							if ( $iconfileTitle !== null && $iconfileTitle->exists() && $skin->getTitle() !== null ) {
 								if ( !$wgCommandLineMode ) {
-									$iconHTML = $wgOut->parseInline(
+									$iconHTML = $wgOut->parseInlineAsInterface(
 										'{{' . $iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconfile' ] . '|link=}}',
 										false
 									);
