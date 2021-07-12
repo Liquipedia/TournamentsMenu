@@ -15,8 +15,8 @@ class Hooks {
 	public static function onSkinBuildSidebar( $skin, &$bar ) {
 		$key = 'TOURNAMENTS';
 		if ( array_key_exists( $key, $bar ) ) {
-			$wgOut = $skin->getOutput();
-			$wgCommandLineMode = $wgOut->getConfig()->get( 'CommandLineMode' );
+			$out = $skin->getOutput();
+			$commandLineMode = $out->getConfig()->get( 'CommandLineMode' );
 			$message = Data::getStandardPageName();
 			$iconTemplatePrefix = Data::getIconPrefix();
 
@@ -46,8 +46,8 @@ class Hooks {
 									NS_TEMPLATE
 							);
 							if ( $iconTitle !== null && $iconTitle->exists() && $skin->getTitle() !== null ) {
-								if ( !$wgCommandLineMode ) {
-									$iconHTML = $wgOut->parseInline(
+								if ( !$commandLineMode ) {
+									$iconHTML = $out->parseInlineAsInterface(
 										'{{' . $iconTemplatePrefix . '/' . $tournament[ 'icon' ] . '|link=}}',
 										false
 									);
@@ -67,9 +67,10 @@ class Hooks {
 									NS_TEMPLATE
 							);
 							if ( $iconfileTitle !== null && $iconfileTitle->exists() && $skin->getTitle() !== null ) {
-								if ( !$wgCommandLineMode ) {
-									$iconHTML = $wgOut->parseInline(
-										'{{' . $iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconfile' ] . '|link=}}',
+								if ( !$commandLineMode ) {
+									$iconHTML = $out->parseInlineAsInterface(
+										'{{' . $iconTemplatePrefix . '/mainpageTST|' .
+										$tournament[ 'iconfile' ] . '|link=}}',
 										false
 									);
 									if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {

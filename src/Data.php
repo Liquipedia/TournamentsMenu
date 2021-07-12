@@ -3,7 +3,7 @@
 namespace Liquipedia\TournamentsMenu;
 
 use ContentHandler;
-use Revision;
+use MediaWiki\Revision\SlotRecord;
 use Title;
 use WikiPage;
 
@@ -19,11 +19,11 @@ class Data {
 		if ( $title->exists() ) {
 			$tournamentData = [];
 			$wikipage = WikiPage::factory( $title );
-			$revision = $wikipage->getRevision();
+			$revision = $wikipage->getRevisionRecord();
 			if ( !$revision ) {
 				return true;
 			}
-			$content = $revision->getContent( Revision::FOR_PUBLIC );
+			$content = $revision->getContent( SlotRecord::MAIN );
 			$text = ContentHandler::getContentText( $content );
 			$lines = explode( "\n", $text );
 

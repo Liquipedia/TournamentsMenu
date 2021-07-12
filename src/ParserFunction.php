@@ -118,7 +118,8 @@ class ParserFunction {
 							$wasParserReportEnabled = $parserOptions->getOption( 'enableLimitReport' );
 							$parserOptions->setOption( 'enableLimitReport', false );
 							$iconHTML = $parser->parse(
-									'{{' . $iconTemplatePrefix . '/mainpageTST|' . $tournament[ 'iconfile' ] . '|link=}}',
+									'{{' . $iconTemplatePrefix . '/mainpageTST|' .
+									$tournament[ 'iconfile' ] . '|link=}}',
 									$parser->getTitle(),
 									$parserOptions,
 									false,
