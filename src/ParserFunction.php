@@ -2,8 +2,8 @@
 
 namespace Liquipedia\TournamentsMenu;
 
-use Title;
 use Parser;
+use Title;
 
 class ParserFunction {
 
