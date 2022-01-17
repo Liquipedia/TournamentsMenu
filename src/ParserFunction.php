@@ -95,6 +95,13 @@ class ParserFunction {
 									false
 								)->getText();
 							$parserOptions->setOption( 'enableLimitReport', $wasParserReportEnabled );
+							if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
+								$iconHTML = substr(
+									$iconHTML,
+									strlen( '<div class="mw-parser-output">' ),
+									-strlen( '</div>' )
+								);
+							}
 							$return .= Parser::stripOuterParagraph( $iconHTML );
 						}
 					} elseif ( array_key_exists( 'iconfile', $tournament ) ) {
@@ -120,6 +127,13 @@ class ParserFunction {
 									false
 								)->getText();
 							$parserOptions->setOption( 'enableLimitReport', $wasParserReportEnabled );
+							if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
+								$iconHTML = substr(
+									$iconHTML,
+									strlen( '<div class="mw-parser-output">' ),
+									-strlen( '</div>' )
+								);
+							}
 							$return .= Parser::stripOuterParagraph( $iconHTML );
 						}
 					}
