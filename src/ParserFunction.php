@@ -3,6 +3,7 @@
 namespace Liquipedia\TournamentsMenu;
 
 use Title;
+use Parser;
 
 class ParserFunction {
 
