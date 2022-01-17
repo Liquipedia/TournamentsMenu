@@ -39,6 +39,7 @@ class ParserFunction {
 
 		$titleFromText = Title::newFromText( $message, NS_PROJECT );
 		$tournamentsData = Data::getFromTitle( $titleFromText );
+		$out = $parser->getOutput();
 		if ( $tournamentsData !== null ) {
 			if ( isset( $filters ) && count( $filters ) > 1 ) {
 				$return .= '<form>';
@@ -77,43 +78,39 @@ class ParserFunction {
 								$iconTemplatePrefix . '/' . $tournament[ 'icon' ],
 								NS_TEMPLATE
 						);
-						if ( $iconTitle !== null && $iconTitle->exists() && $skin->getTitle() !== null ) {
-							if ( !$commandLineMode ) {
-								$iconHTML = $out->parseInlineAsInterface(
-									'{{' . $iconTemplatePrefix . '/' . $tournament[ 'icon' ] . '|link=}}',
-									false
+						if ( $iconTitle !== null && $iconTitle->exists() && $parser->getTitle() !== null ) {
+							$iconHTML = $out->parseInlineAsInterface(
+								'{{' . $iconTemplatePrefix . '/' . $tournament[ 'icon' ] . '|link=}}',
+								false
+							);
+							if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
+								$iconHTML = substr(
+									$iconHTML,
+									strlen( '<div class="mw-parser-output">' ),
+									-strlen( '</div>' )
 								);
-								if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
-									$iconHTML = substr(
-										$iconHTML,
-										strlen( '<div class="mw-parser-output">' ),
-										-strlen( '</div>' )
-									);
-								}
-								$return .= $iconHTML;
 							}
+							$return .= $iconHTML;
 						}
 					} elseif ( array_key_exists( 'iconfile', $tournament ) ) {
 						$iconfileTitle = Title::newFromText(
 								$iconTemplatePrefix . '/mainpageTST',
 								NS_TEMPLATE
 						);
-						if ( $iconfileTitle !== null && $iconfileTitle->exists() && $skin->getTitle() !== null ) {
-							if ( !$commandLineMode ) {
-								$iconHTML = $out->parseInlineAsInterface(
-									'{{' . $iconTemplatePrefix . '/mainpageTST|' .
-									$tournament[ 'iconfile' ] . '|link=}}',
-									false
+						if ( $iconfileTitle !== null && $iconfileTitle->exists() && $parser->getTitle() !== null ) {
+							$iconHTML = $out->parseInlineAsInterface(
+								'{{' . $iconTemplatePrefix . '/mainpageTST|' .
+								$tournament[ 'iconfile' ] . '|link=}}',
+								false
+							);
+							if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
+								$iconHTML = substr(
+									$iconHTML,
+									strlen( '<div class="mw-parser-output">' ),
+									-strlen( '</div>' )
 								);
-								if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
-									$iconHTML = substr(
-										$iconHTML,
-										strlen( '<div class="mw-parser-output">' ),
-										-strlen( '</div>' )
-									);
-								}
-								$return .= $iconHTML;
 							}
+							$return .= $iconHTML;
 						}
 					}
 
