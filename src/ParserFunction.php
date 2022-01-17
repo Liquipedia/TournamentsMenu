@@ -77,63 +77,43 @@ class ParserFunction {
 								$iconTemplatePrefix . '/' . $tournament[ 'icon' ],
 								NS_TEMPLATE
 						);
-						if (
-							array_key_exists( 'icon', $tournament )
-							&& $iconTitle !== null
-							&& $iconTitle->exists()
-							&& $parser->getTitle() !== null
-						) {
-							$parserOptions = $parser->getOptions();
-							$wasParserReportEnabled = $parserOptions->getOption( 'enableLimitReport' );
-							$parserOptions->setOption( 'enableLimitReport', false );
-							$iconHTML = $parser->parse(
+						if ( $iconTitle !== null && $iconTitle->exists() && $skin->getTitle() !== null ) {
+							if ( !$commandLineMode ) {
+								$iconHTML = $out->parseInlineAsInterface(
 									'{{' . $iconTemplatePrefix . '/' . $tournament[ 'icon' ] . '|link=}}',
-									$parser->getTitle(),
-									$parserOptions,
-									false,
 									false
-								)->getText();
-							$parserOptions->setOption( 'enableLimitReport', $wasParserReportEnabled );
-							$from = '<span';
-							$to = '</span>';
-							if ( strpos( $iconHTML, $from ) !== false && strpos( $iconHTML, $to ) !== false ) {
-								$fromPos = strpos( $iconHTML, $from );
-								$toPos = strpos( $iconHTML, $to ) + strlen( $to );
-								$iconHTML = substr( $iconHTML, $fromPos, $toPos - $fromPos );
+								);
+								if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
+									$iconHTML = substr(
+										$iconHTML,
+										strlen( '<div class="mw-parser-output">' ),
+										-strlen( '</div>' )
+									);
+								}
+								$return .= $iconHTML;
 							}
-							$return .= $iconHTML;
 						}
 					} elseif ( array_key_exists( 'iconfile', $tournament ) ) {
 						$iconfileTitle = Title::newFromText(
 								$iconTemplatePrefix . '/mainpageTST',
 								NS_TEMPLATE
 						);
-						if (
-							array_key_exists( 'iconfile', $tournament )
-							&& $iconfileTitle !== null
-							&& $iconfileTitle->exists()
-							&& $parser->getTitle() !== null
-						) {
-							$parserOptions = $parser->getOptions();
-							$wasParserReportEnabled = $parserOptions->getOption( 'enableLimitReport' );
-							$parserOptions->setOption( 'enableLimitReport', false );
-							$iconHTML = $parser->parse(
+						if ( $iconfileTitle !== null && $iconfileTitle->exists() && $skin->getTitle() !== null ) {
+							if ( !$commandLineMode ) {
+								$iconHTML = $out->parseInlineAsInterface(
 									'{{' . $iconTemplatePrefix . '/mainpageTST|' .
 									$tournament[ 'iconfile' ] . '|link=}}',
-									$parser->getTitle(),
-									$parserOptions,
-									false,
 									false
-								)->getText();
-							$parserOptions->setOption( 'enableLimitReport', $wasParserReportEnabled );
-							$from = '<span';
-							$to = '</span>';
-							if ( strpos( $iconHTML, $from ) !== false && strpos( $iconHTML, $to ) !== false ) {
-								$fromPos = strpos( $iconHTML, $from );
-								$toPos = strpos( $iconHTML, $to ) + strlen( $to );
-								$iconHTML = substr( $iconHTML, $fromPos, $toPos - $fromPos );
+								);
+								if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
+									$iconHTML = substr(
+										$iconHTML,
+										strlen( '<div class="mw-parser-output">' ),
+										-strlen( '</div>' )
+									);
+								}
+								$return .= $iconHTML;
 							}
-							$return .= $iconHTML;
 						}
 					}
 
