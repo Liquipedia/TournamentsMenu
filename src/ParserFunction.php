@@ -2,6 +2,7 @@
 
 namespace Liquipedia\TournamentsMenu;
 
+use Parser;
 use Title;
 
 class ParserFunction {
@@ -94,14 +95,14 @@ class ParserFunction {
 									false
 								)->getText();
 							$parserOptions->setOption( 'enableLimitReport', $wasParserReportEnabled );
-							$from = '<span';
-							$to = '</span>';
-							if ( strpos( $iconHTML, $from ) !== false && strpos( $iconHTML, $to ) !== false ) {
-								$fromPos = strpos( $iconHTML, $from );
-								$toPos = strpos( $iconHTML, $to ) + strlen( $to );
-								$iconHTML = substr( $iconHTML, $fromPos, $toPos - $fromPos );
+							if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
+								$iconHTML = substr(
+									$iconHTML,
+									strlen( '<div class="mw-parser-output">' ),
+									-strlen( '</div>' )
+								);
 							}
-							$return .= $iconHTML;
+							$return .= Parser::stripOuterParagraph( $iconHTML );
 						}
 					} elseif ( array_key_exists( 'iconfile', $tournament ) ) {
 						$iconfileTitle = Title::newFromText(
@@ -126,14 +127,14 @@ class ParserFunction {
 									false
 								)->getText();
 							$parserOptions->setOption( 'enableLimitReport', $wasParserReportEnabled );
-							$from = '<span';
-							$to = '</span>';
-							if ( strpos( $iconHTML, $from ) !== false && strpos( $iconHTML, $to ) !== false ) {
-								$fromPos = strpos( $iconHTML, $from );
-								$toPos = strpos( $iconHTML, $to ) + strlen( $to );
-								$iconHTML = substr( $iconHTML, $fromPos, $toPos - $fromPos );
+							if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
+								$iconHTML = substr(
+									$iconHTML,
+									strlen( '<div class="mw-parser-output">' ),
+									-strlen( '</div>' )
+								);
 							}
-							$return .= $iconHTML;
+							$return .= Parser::stripOuterParagraph( $iconHTML );
 						}
 					}
 
