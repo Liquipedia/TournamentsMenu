@@ -16,7 +16,7 @@ class MainHookHandler implements
 	 * Hook callback for 'ParserFirstCallInit'
 	 * @param Parser $parser Parser object
 	 */
-	public static function onParserFirstCallInit( $parser ) {
+	public function onParserFirstCallInit( $parser ) {
 		$parser->setHook(
 			'tournaments',
 			'Liquipedia\Extension\TournamentsMenu\ParserFunction::getTournamentsList'
