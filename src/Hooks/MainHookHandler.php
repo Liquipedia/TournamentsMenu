@@ -1,10 +1,27 @@
 <?php
 
-namespace Liquipedia\TournamentsMenu;
+namespace Liquipedia\Extension\TournamentsMenu\Hooks;
 
+use Liquipedia\Extension\TournamentsMenu\Data;
+use MediaWiki\Hook\ParserFirstCallInitHook;
+use MediaWiki\Hook\SkinBuildSidebarHook;
 use Title;
 
-class Hooks {
+class MainHookHandler implements
+	ParserFirstCallInitHook,
+	SkinBuildSidebarHook
+{
+
+	/**
+	 * Hook callback for 'ParserFirstCallInit'
+	 * @param Parser $parser Parser object
+	 */
+	public static function onParserFirstCallInit( $parser ) {
+		$parser->setHook(
+			'tournaments',
+			'Liquipedia\Extension\TournamentsMenu\ParserFunction::getTournamentsList'
+		);
+	}
 
 	/**
 	 * Hook callback for 'SkinBuildSidebar'
@@ -12,7 +29,7 @@ class Hooks {
 	 * @param array &$bar array that holds the sidebar
 	 * @return array|null tournament list
 	 */
-	public static function onSkinBuildSidebar( $skin, &$bar ) {
+	public function onSkinBuildSidebar( $skin, &$bar ) {
 		$key = 'TOURNAMENTS';
 		if ( array_key_exists( $key, $bar ) ) {
 			$out = $skin->getOutput();

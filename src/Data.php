@@ -1,6 +1,6 @@
 <?php
 
-namespace Liquipedia\TournamentsMenu;
+namespace Liquipedia\Extension\TournamentsMenu;
 
 use ContentHandler;
 use MediaWiki\Revision\SlotRecord;

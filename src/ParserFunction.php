@@ -1,22 +1,11 @@
 <?php
 
-namespace Liquipedia\TournamentsMenu;
+namespace Liquipedia\Extension\TournamentsMenu;
 
 use Parser;
 use Title;
 
 class ParserFunction {
-
-	/**
-	 * Hook callback for 'ParserFirstCallInit'
-	 * @param Parser $parser Parser object
-	 */
-	public static function onParserFirstCallInit( $parser ) {
-		$parser->setHook(
-			'tournaments',
-			'Liquipedia\TournamentsMenu\ParserFunction::getTournamentsList'
-		);
-	}
 
 	/**
 	 * Callback for tournaments parser hook

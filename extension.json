@@ -1,6 +1,6 @@
 {
 	"name": "TournamentsMenu",
-	"version": "2.0.0",
+	"version": "2.1.0",
 	"author": [
 		"[https://fo-nttax.de Alex Winkler]"
 	],
@@ -17,15 +17,16 @@
 		]
 	},
 	"AutoloadNamespaces": {
-		"Liquipedia\\TournamentsMenu\\": "src/"
+		"Liquipedia\\Extension\\TournamentsMenu\\": "src/"
+	},
+	"HookHandlers": {
+		"Main": {
+			"class": "\\Liquipedia\\Extension\\TournamentsMenu\\Hooks\\MainHookHandler"
+		}
 	},
 	"Hooks": {
-		"SkinBuildSidebar": [
-			"Liquipedia\\TournamentsMenu\\Hooks::onSkinBuildSidebar"
-		],
-		"ParserFirstCallInit": [
-			"Liquipedia\\TournamentsMenu\\ParserFunction::onParserFirstCallInit"
-		]
+		"SkinBuildSidebar": "Main",
+		"ParserFirstCallInit": "Main"
 	},
-	"manifest_version": 1
+	"manifest_version": 2
 }
