@@ -87,7 +87,8 @@ class MainHookHandler implements
 								if ( !$commandLineMode ) {
 									$iconHTML = $out->parseInlineAsInterface(
 										'{{' . $iconTemplatePrefix . '/mainpageTST|' .
-										$tournament[ 'iconfile' ] . '|link=}}',
+										'iconDark=' . $tournament[ 'icondarkfile' ] .
+										'|' . $tournament[ 'iconfile' ] . '|link=}}',
 										false
 									);
 									if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
