@@ -56,7 +56,8 @@ class MainHookHandler implements
 						];
 
 						// Should we add an icon
-						// icon = SMW.Is part of series; iconfile = SMW.Has icon
+						// icon = SMW.Is part of series or LPDB.series
+						// iconfile = SMW.Has icon or LPDB.icon
 						if ( array_key_exists( 'icon', $tournament ) ) {
 							$iconTitle = Title::newFromText(
 									$iconTemplatePrefix . '/' . $tournament[ 'icon' ],
