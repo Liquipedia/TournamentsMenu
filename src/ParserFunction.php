@@ -109,14 +109,16 @@ class ParserFunction {
 							$wasParserReportEnabled = $parserOptions->getOption( 'enableLimitReport' );
 							$parserOptions->setOption( 'enableLimitReport', false );
 							$iconHTML = $parser->parse(
-									'{{' . $iconTemplatePrefix . '/mainpageTST|' .
-									'iconDark=' . $tournament[ 'icondarkfile' ] .
-									'|' . $tournament[ 'iconfile' ] . '|link=}}',
-									$parser->getTitle(),
-									$parserOptions,
-									false,
-									false
-								)->getText();
+								'{{' . $iconTemplatePrefix . '/mainpageTST|' .
+								( array_key_exists( 'icondarkfile', $tournament )
+									? 'iconDark=' . $tournament[ 'icondarkfile' ] . '|'
+									: '' ) .
+								$tournament[ 'iconfile' ] . '|link=}}',
+								$parser->getTitle(),
+								$parserOptions,
+								false,
+								false
+							)->getText();
 							$parserOptions->setOption( 'enableLimitReport', $wasParserReportEnabled );
 							if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
 								$iconHTML = substr(
