@@ -61,7 +61,8 @@ class ParserFunction {
 					$return .= '<span class="tournaments-list-name">';
 
 					// Should we add an icon
-					// icon = SMW.Is part of series; iconfile = SMW.Has icon
+					// icon = SMW.Is part of series or LPDB.series
+					// iconfile = SMW.Has icon or LPDB.icon
 					if ( array_key_exists( 'icon', $tournament ) ) {
 						$iconTitle = Title::newFromText(
 								$iconTemplatePrefix . '/' . $tournament[ 'icon' ],
@@ -109,7 +110,8 @@ class ParserFunction {
 							$parserOptions->setOption( 'enableLimitReport', false );
 							$iconHTML = $parser->parse(
 									'{{' . $iconTemplatePrefix . '/mainpageTST|' .
-									$tournament[ 'iconfile' ] . '|link=}}',
+									'iconDark=' . $tournament[ 'icondarkfile' ] .
+									'|' . $tournament[ 'iconfile' ] . '|link=}}',
 									$parser->getTitle(),
 									$parserOptions,
 									false,
