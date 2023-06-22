@@ -2,10 +2,9 @@
 
 namespace Liquipedia\Extension\TournamentsMenu;
 
-use ContentHandler;
+use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\SlotRecord;
 use Title;
-use WikiPage;
 
 class Data {
 
@@ -13,18 +12,19 @@ class Data {
 	 * Parse the page requested by $title, and return its data, or null
 	 * if the page does not exist
 	 * @param Title $title Title object for data page
-	 * @return array|null Tournament list
+	 * @return array|null|bool Tournament list
 	 */
 	public static function getFromTitle( $title ) {
 		if ( $title->exists() ) {
 			$tournamentData = [];
-			$wikipage = WikiPage::factory( $title );
+			$wikiPageFactory = MediaWikiServices::getInstance()->getWikiPageFactory();
+			$wikipage = $wikiPageFactory->newFromTitle( $title );
 			$revision = $wikipage->getRevisionRecord();
 			if ( !$revision ) {
 				return true;
 			}
 			$content = $revision->getContent( SlotRecord::MAIN );
-			$text = ContentHandler::getContentText( $content );
+			$text = $content->getText();
 			$lines = explode( "\n", $text );
 
 			$heading = '';
@@ -97,8 +97,8 @@ class Data {
 						if ( wfMessage( $line[ 0 ], $link )->inContentLanguage()->isBlank() ) {
 							$link = $line[ 0 ];
 						}
-
-						if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
+						$urlUtils = MediaWikiServices::getInstance()->getUrlUtils();
+						if ( preg_match( '/^(?:' . $urlUtils->validProtocols() . ')/', $link ) ) {
 							$href = $link;
 						} else {
 							$targetTitle = Title::newFromText( $link );
