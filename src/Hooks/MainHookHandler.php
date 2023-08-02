@@ -27,7 +27,7 @@ class MainHookHandler implements
 	 * Hook callback for 'SkinBuildSidebar'
 	 * @param Skin $skin Skin object for context purposes
 	 * @param array &$bar array that holds the sidebar
-	 * @return array|null tournament list
+	 * @return array|null|bool tournament list
 	 */
 	public function onSkinBuildSidebar( $skin, &$bar ) {
 		$key = 'TOURNAMENTS';

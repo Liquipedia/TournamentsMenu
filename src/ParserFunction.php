@@ -13,7 +13,7 @@ class ParserFunction {
 	 * @param array $attributes
 	 * @param Parser $parser
 	 * @param PPFrame $frame
-	 * @return string tournament list as html
+	 * @return string|array tournament list as html
 	 */
 	public static function getTournamentsList( $content, $attributes, $parser, $frame ) {
 		if ( isset( $attributes[ 'page' ] ) && !empty( $attributes[ 'page' ] ) ) {
@@ -72,14 +72,14 @@ class ParserFunction {
 							array_key_exists( 'icon', $tournament )
 							&& $iconTitle !== null
 							&& $iconTitle->exists()
-							&& $parser->getTitle() !== null
+							&& $parser->getPage() !== null
 						) {
 							$parserOptions = $parser->getOptions();
 							$wasParserReportEnabled = $parserOptions->getOption( 'enableLimitReport' );
 							$parserOptions->setOption( 'enableLimitReport', false );
 							$iconHTML = $parser->parse(
 									'{{' . $iconTemplatePrefix . '/' . $tournament[ 'icon' ] . '|link=}}',
-									$parser->getTitle(),
+									$parser->getPage(),
 									$parserOptions,
 									false,
 									false
@@ -103,7 +103,7 @@ class ParserFunction {
 							array_key_exists( 'iconfile', $tournament )
 							&& $iconfileTitle !== null
 							&& $iconfileTitle->exists()
-							&& $parser->getTitle() !== null
+							&& $parser->getPage() !== null
 						) {
 							$parserOptions = $parser->getOptions();
 							$wasParserReportEnabled = $parserOptions->getOption( 'enableLimitReport' );
@@ -114,7 +114,7 @@ class ParserFunction {
 									? 'iconDark=' . $tournament[ 'icondarkfile' ] . '|'
 									: '' ) .
 								$tournament[ 'iconfile' ] . '|link=}}',
-								$parser->getTitle(),
+								$parser->getPage(),
 								$parserOptions,
 								false,
 								false
