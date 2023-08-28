@@ -24,8 +24,13 @@ class Data {
 				return true;
 			}
 			$content = $revision->getContent( SlotRecord::MAIN );
+<< << << < Updated upstream
 			$text = $content->getText();
 			$lines = explode( "\n", $text );
+=== === =
+			$text = ContentHandler::getContentText( $content );
+			$lines = explode( "\n", $text ?? '' );
+>> >> >> > Stashed changes
 
 			$heading = '';
 			foreach ( $lines as $line ) {
