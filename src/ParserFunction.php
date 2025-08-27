@@ -86,11 +86,7 @@ class ParserFunction {
 								)->getText();
 							$parserOptions->setOption( 'enableLimitReport', $wasParserReportEnabled );
 							if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
-								$iconHTML = substr(
-									$iconHTML,
-									strlen( '<div class="mw-parser-output">' ),
-									-strlen( '</div>' )
-								);
+								$iconHTML = Helper::unwrapHtml( $iconHTML );
 							}
 							$return .= Parser::stripOuterParagraph( $iconHTML );
 						}
@@ -121,11 +117,7 @@ class ParserFunction {
 							)->getText();
 							$parserOptions->setOption( 'enableLimitReport', $wasParserReportEnabled );
 							if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
-								$iconHTML = substr(
-									$iconHTML,
-									strlen( '<div class="mw-parser-output">' ),
-									-strlen( '</div>' )
-								);
+								$iconHTML = Helper::unwrapHtml( $iconHTML );
 							}
 							$return .= Parser::stripOuterParagraph( $iconHTML );
 						}
