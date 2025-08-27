@@ -3,6 +3,7 @@
 namespace Liquipedia\Extension\TournamentsMenu\Hooks;
 
 use Liquipedia\Extension\TournamentsMenu\Data;
+use Liquipedia\Extension\TournamentsMenu\Helper;
 use MediaWiki\Hook\ParserFirstCallInitHook;
 use MediaWiki\Hook\SkinBuildSidebarHook;
 use Title;
@@ -70,11 +71,7 @@ class MainHookHandler implements
 										false
 									);
 									if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
-										$iconHTML = substr(
-											$iconHTML,
-											strlen( '<div class="mw-parser-output">' ),
-											-strlen( '</div>' )
-										);
+										$iconHTML = Helper::unwrapHtml( $iconHTML );
 									}
 									$text = $iconHTML . ' ' . $text;
 								}
@@ -95,11 +92,7 @@ class MainHookHandler implements
 										false
 									);
 									if ( strpos( $iconHTML, 'mw-parser-output' ) !== false ) {
-										$iconHTML = substr(
-											$iconHTML,
-											strlen( '<div class="mw-parser-output">' ),
-											-strlen( '</div>' )
-										);
+										$iconHTML = Helper::unwrapHtml( $iconHTML );
 									}
 									$text = $iconHTML . ' ' . $text;
 								}
