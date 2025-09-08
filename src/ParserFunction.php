@@ -92,7 +92,7 @@ class ParserFunction {
 						}
 					} elseif ( array_key_exists( 'iconfile', $tournament ) ) {
 						$iconfileTitle = Title::newFromText(
-								$iconTemplatePrefix . '/mainpageTST',
+								$iconTemplatePrefix . '/custom',
 								NS_TEMPLATE
 						);
 						if (
@@ -105,7 +105,7 @@ class ParserFunction {
 							$wasParserReportEnabled = $parserOptions->getOption( 'enableLimitReport' );
 							$parserOptions->setOption( 'enableLimitReport', false );
 							$iconHTML = $parser->parse(
-								'{{' . $iconTemplatePrefix . '/mainpageTST|' .
+								'{{' . $iconTemplatePrefix . '/custom|' .
 								( array_key_exists( 'icondarkfile', $tournament )
 									? 'iconDark=' . $tournament[ 'icondarkfile' ] . '|'
 									: '' ) .
