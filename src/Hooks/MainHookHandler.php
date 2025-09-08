@@ -78,13 +78,13 @@ class MainHookHandler implements
 							}
 						} elseif ( array_key_exists( 'iconfile', $tournament ) ) {
 							$iconfileTitle = Title::newFromText(
-									$iconTemplatePrefix . '/mainpageTST',
+									$iconTemplatePrefix . '/custom',
 									NS_TEMPLATE
 							);
 							if ( $iconfileTitle !== null && $iconfileTitle->exists() && $skin->getTitle() !== null ) {
 								if ( !$commandLineMode ) {
 									$iconHTML = $out->parseInlineAsInterface(
-										'{{' . $iconTemplatePrefix . '/mainpageTST|' .
+										'{{' . $iconTemplatePrefix . '/custom|' .
 										( array_key_exists( 'icondarkfile', $tournament )
 											? 'iconDark=' . $tournament[ 'icondarkfile' ] . '|'
 											: '' ) .
