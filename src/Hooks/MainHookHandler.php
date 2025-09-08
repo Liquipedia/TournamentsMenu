@@ -64,7 +64,7 @@ class MainHookHandler implements
 									$iconTemplatePrefix . '/' . $tournament[ 'icon' ],
 									NS_TEMPLATE
 							);
-							if ( $skin->getTitle() !== null ) {
+							if ( $iconTitle !== null && $iconTitle->exists() && $skin->getTitle() !== null ) {
 								if ( !$commandLineMode ) {
 									$iconHTML = $out->parseInlineAsInterface(
 										'{{' . $iconTemplatePrefix . '/' . $tournament[ 'icon' ] . '|link=}}',
@@ -81,7 +81,7 @@ class MainHookHandler implements
 									$iconTemplatePrefix . '/custom',
 									NS_TEMPLATE
 							);
-							if ( $iconfileTitle !== null && $iconfileTitle->exists() && $skin->getTitle() !== null ) {
+							if ( $skin->getTitle() !== null ) {
 								if ( !$commandLineMode ) {
 									$iconHTML = $out->parseInlineAsInterface(
 										'{{' . $iconTemplatePrefix . '/custom|' .
